@@ -11,6 +11,9 @@ venv/
 # Artefactos gerados (modelos treinados ~1.2 GB)
 artefactos/modelos/
 
+# Dados (ficheiros FIT brutos e CSVs processados)
+Dados/
+
 # Sistema de ficheiros / editor
 .DS_Store
 Thumbs.db
