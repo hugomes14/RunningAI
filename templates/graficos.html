@@ -18,25 +18,6 @@
   {% endfor %}
 </section>
 
-{% if experiencia_potencia %}
-<section class="page-intro graph-section-heading">
-  <p class="eyebrow">EXPERIÊNCIA CONTROLADA</p>
-  <h2>Zonas cardíacas vs. zonas de potência</h2>
-  <p>Comparação sobre os mesmos troços, alvos e folds por atividade. Estes resultados ainda não substituem o modelo atual.</p>
-</section>
-
-<section class="gallery">
-  {% for grafico in experiencia_potencia %}
-  <article class="card graph-card">
-    <div><h2>{{ grafico.titulo }}</h2><p>{{ grafico.descricao }}</p></div>
-    <a href="{{ url_for('ficheiro_experiencia_potencia', nome=grafico.nome, v=grafico.versao) }}" target="_blank" title="Abrir imagem completa">
-      <img loading="lazy" src="{{ url_for('ficheiro_experiencia_potencia', nome=grafico.nome, v=grafico.versao) }}" alt="{{ grafico.titulo }}">
-    </a>
-  </article>
-  {% endfor %}
-</section>
-{% endif %}
-
 <details class="card activity-section">
   <summary><span><strong>Perfis das atividades</strong><small>{{ atividades|length }} gráficos individuais</small></span><b>+</b></summary>
   <div class="activity-gallery">

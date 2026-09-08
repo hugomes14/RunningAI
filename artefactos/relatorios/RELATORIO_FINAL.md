@@ -187,7 +187,30 @@ Desempenho por frequência de gravação:
 
 ![Curva de aprendizagem por atividades](artefactos/graficos/curva_aprendizagem_atividades.png)
 
-## 12. Previsão de percurso
+## 12. Experiência com zonas de potência
+
+Foi testada a substituição das zonas cardíacas por gamas de potência. Para tornar a comparação justa, foram usados os mesmos **2972 troços**, as mesmas **17 atividades**, os mesmos alvos e os mesmos folds `LeaveOneGroupOut`. A experiência só incluiu atividades com potência; por isso, estas métricas não são diretamente comparáveis com as do modelo principal.
+
+A potência e a FC exatas serviram apenas para classificar os dados históricos e calcular correlações de diagnóstico. Nenhum valor exato de potência foi usado como feature dos modelos comparados.
+
+| tipo_zona           |   pearson_valor_ritmo |   spearman_valor_ritmo |   spearman_zona_ritmo |   n_trocos |   n_atividades |
+|:--------------------|----------------------:|-----------------------:|----------------------:|-----------:|---------------:|
+| Frequência cardíaca |                -0.216 |                 -0.42  |                -0.431 |       2972 |             17 |
+| Potência            |                -0.528 |                 -0.569 |                -0.108 |       2972 |             17 |
+
+A potência média contínua apresentou uma associação mais forte com o ritmo, com Spearman de **−0,569**, contra **−0,420** para a FC média. Ao reduzir os valores às cinco gamas Garmin, a associação da zona de potência caiu para **−0,108**, enquanto a zona cardíaca manteve **−0,431**. A divisão em cinco gamas perde, portanto, grande parte da informação disponível na potência contínua.
+
+O melhor resultado com zonas cardíacas foi **GradientBoosting**, com MAE macro de **55.93 s/km** e RMSE de **73.17 s/km**. Com zonas de potência, **RandomForest** obteve MAE de **53.26 s/km** e RMSE de **73.06 s/km**.
+
+A redução média do MAE foi de apenas **2.67 s/km**. A potência venceu em **8 de 17 atividades**, e o intervalo bootstrap de 95% da diferença potência menos FC foi **[-8.94, 3.49] s/km**, incluindo zero. A melhoria não é suficientemente consistente para justificar a troca.
+
+![Comparação entre zonas cardíacas e de potência](artefactos/experiencia_potencia/comparacao_mae_fc_potencia.png)
+
+![Ritmo por tipo de zona](artefactos/experiencia_potencia/ritmo_por_tipo_zona.png)
+
+**Decisão:** o modelo final e a aplicação mantêm exclusivamente as zonas cardíacas. O resultado da potência fica registado como experiência e poderá ser revisto quando existirem mais atividades com potência.
+
+## 13. Previsão de percurso
 
 Percurso de demonstração: `Dados/brutos/24225591249_ACTIVITY.fit`.
 
@@ -203,7 +226,7 @@ Percurso de demonstração: `Dados/brutos/24225591249_ACTIVITY.fit`.
 
 A previsão assume permanência na zona escolhida e não simula a resposta cardíaca real durante o esforço.
 
-## 13. Limitações
+## 14. Limitações
 
 - O estudo contém **34 atividades elegíveis** de uma única pessoa; a validade externa para outras pessoas é reduzida.
 - Foram identificados **657 candidatos a outlier** por IQR e nenhum foi removido automaticamente.
@@ -214,8 +237,10 @@ A previsão assume permanência na zona escolhida e não simula a resposta card�
 - A previsão por zona assume que o atleta permanece nessa zona; o modelo não simula atraso ou deriva da resposta cardíaca.
 - Se fosse usada a fórmula `220 - idade`, ela seria apenas uma aproximação. Nesta execução, os limites vieram diretamente da configuração Garmin mais recente.
 
-## 14. Conclusões
+## 15. Conclusões
 
 O **GradientBoosting** apresentou o menor MAE macro fora do treino, com **68.58 s/km**, e superou o baseline em **30.6%**. O desempenho varia bastante entre atividades e o R² macro permaneceu negativo, pelo que as previsões devem ser lidas em conjunto com os indicadores de pouco suporte e com os gráficos por zona, declive e atividade.
+
+A experiência com gamas de potência não demonstrou uma melhoria consistente. A solução final permanece baseada no percurso, na altimetria e na zona cardíaca escolhida.
 
 O passo seguinte com maior valor é recolher mais atividades que preencham as zonas e perfis altimétricos pouco representados, sobretudo Z1, e repetir a validação sem alterar o conjunto de teste de cada fold.

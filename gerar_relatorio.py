@@ -16,6 +16,7 @@ ARTEFACTOS = RAIZ / "artefactos"
 METRICAS = ARTEFACTOS / "metricas"
 GRAFICOS = ARTEFACTOS / "graficos"
 RELATORIOS = ARTEFACTOS / "relatorios"
+EXPERIENCIA_POTENCIA = ARTEFACTOS / "experiencia_potencia"
 
 
 def _tabela(df: pd.DataFrame, casas: int = 2) -> str:
@@ -31,6 +32,13 @@ def _tabela(df: pd.DataFrame, casas: int = 2) -> str:
 
 def _imagem(nome: str, legenda: str) -> str:
     caminho = Path("artefactos") / "graficos" / nome
+    if (RAIZ / caminho).exists():
+        return f"![{legenda}]({caminho.as_posix()})"
+    return f"*Visualização não disponível: `{caminho.as_posix()}`.*"
+
+
+def _imagem_experiencia(nome: str, legenda: str) -> str:
+    caminho = Path("artefactos") / "experiencia_potencia" / nome
     if (RAIZ / caminho).exists():
         return f"![{legenda}]({caminho.as_posix()})"
     return f"*Visualização não disponível: `{caminho.as_posix()}`.*"
@@ -236,7 +244,7 @@ Desempenho por frequência de gravação:
 def secao_previsao() -> str:
     ficheiros = sorted((ARTEFACTOS / "previsoes_percurso").glob("*.json"))
     if not ficheiros:
-        return """## 12. Previsão de percurso
+        return """## 13. Previsão de percurso
 
 A etapa de previsão de percurso não foi executada.
 """
@@ -244,7 +252,7 @@ A etapa de previsão de percurso não foi executada.
     tabela = pd.DataFrame(
         [{"zona": zona, **valores} for zona, valores in resumo["zonas"].items()]
     )[["zona", "distancia_valida_m", "tempo_estimado_sem_paragens_s", "ritmo_medio_mmss_km", "distancia_pouco_suporte_m", "trocos_invalidos"]]
-    return f"""## 12. Previsão de percurso
+    return f"""## 13. Previsão de percurso
 
 Percurso de demonstração: `{resumo['percurso']}`.
 
@@ -256,11 +264,54 @@ Percurso de demonstração: `{resumo['percurso']}`.
 """
 
 
+def secao_experiencia_potencia() -> str:
+    """Preserva a experiência descartada sem alterar o modelo final."""
+    caminho = EXPERIENCIA_POTENCIA / "resultado.json"
+    if not caminho.exists():
+        return """## 12. Experiência com zonas de potência
+
+A experiência ainda não foi executada. O modelo final usa exclusivamente zonas cardíacas.
+"""
+    resultado = json.loads(caminho.read_text(encoding="utf-8"))
+    cobertura = resultado["cobertura"]
+    comparacao = resultado["comparacao_pareada_dos_vencedores"]
+    correlacoes = pd.DataFrame(resultado["correlacoes"])[
+        [
+            "tipo_zona",
+            "pearson_valor_ritmo",
+            "spearman_valor_ritmo",
+            "spearman_zona_ritmo",
+            "n_trocos",
+            "n_atividades",
+        ]
+    ]
+    return f"""## 12. Experiência com zonas de potência
+
+Foi testada a substituição das zonas cardíacas por gamas de potência. Para tornar a comparação justa, foram usados os mesmos **{cobertura['trocos_pareados']} troços**, as mesmas **{cobertura['atividades_com_potencia']} atividades**, os mesmos alvos e os mesmos folds `LeaveOneGroupOut`. A experiência só incluiu atividades com potência; por isso, estas métricas não são diretamente comparáveis com as do modelo principal.
+
+A potência e a FC exatas serviram apenas para classificar os dados históricos e calcular correlações de diagnóstico. Nenhum valor exato de potência foi usado como feature dos modelos comparados.
+
+{_tabela(correlacoes, 3)}
+
+A potência média contínua apresentou uma associação mais forte com o ritmo, com Spearman de **−0,569**, contra **−0,420** para a FC média. Ao reduzir os valores às cinco gamas Garmin, a associação da zona de potência caiu para **−0,108**, enquanto a zona cardíaca manteve **−0,431**. A divisão em cinco gamas perde, portanto, grande parte da informação disponível na potência contínua.
+
+O melhor resultado com zonas cardíacas foi **{comparacao['modelo_fc']}**, com MAE macro de **{comparacao['mae_fc']:.2f} s/km** e RMSE de **{comparacao['rmse_fc']:.2f} s/km**. Com zonas de potência, **{comparacao['modelo_potencia']}** obteve MAE de **{comparacao['mae_potencia']:.2f} s/km** e RMSE de **{comparacao['rmse_potencia']:.2f} s/km**.
+
+A redução média do MAE foi de apenas **{-comparacao['diferenca_potencia_menos_fc_s_km']:.2f} s/km**. A potência venceu em **{comparacao['atividades_potencia_melhor']} de {comparacao['n_atividades']} atividades**, e o intervalo bootstrap de 95% da diferença potência menos FC foi **[{comparacao['bootstrap_95_inferior']:.2f}, {comparacao['bootstrap_95_superior']:.2f}] s/km**, incluindo zero. A melhoria não é suficientemente consistente para justificar a troca.
+
+{_imagem_experiencia('comparacao_mae_fc_potencia.png', 'Comparação entre zonas cardíacas e de potência')}
+
+{_imagem_experiencia('ritmo_por_tipo_zona.png', 'Ritmo por tipo de zona')}
+
+**Decisão:** o modelo final e a aplicação mantêm exclusivamente as zonas cardíacas. O resultado da potência fica registado como experiência e poderá ser revisto quando existirem mais atividades com potência.
+"""
+
+
 def secao_limitacoes() -> str:
     df = pd.read_csv(DADOS / "amostras_modelo.csv")
     outliers = pd.read_csv(ARTEFACTOS / "analise_dataset" / "outliers_iqr.csv")
     contagens = df["zona_ordem"].value_counts()
-    return f"""## 13. Limitações
+    return f"""## 14. Limitações
 
 - O estudo contém **{df['atividade_id'].nunique()} atividades elegíveis** de uma única pessoa; a validade externa para outras pessoas é reduzida.
 - Foram identificados **{len(outliers)} candidatos a outlier** por IQR e nenhum foi removido automaticamente.
@@ -276,16 +327,18 @@ def secao_limitacoes() -> str:
 def secao_conclusoes() -> str:
     resultado = json.loads((METRICAS / "resultado.json").read_text(encoding="utf-8"))
     m = resultado["metricas_oof"]
-    return f"""## 14. Conclusões
+    return f"""## 15. Conclusões
 
 O **{resultado['modelo_vencedor']}** apresentou o menor MAE macro fora do treino, com **{m['mae_macro_s_km']:.2f} s/km**, e superou o baseline em **{m['melhoria_vs_dummy_pct']:.1f}%**. O desempenho varia bastante entre atividades e o R² macro permaneceu negativo, pelo que as previsões devem ser lidas em conjunto com os indicadores de pouco suporte e com os gráficos por zona, declive e atividade.
+
+A experiência com gamas de potência não demonstrou uma melhoria consistente. A solução final permanece baseada no percurso, na altimetria e na zona cardíaca escolhida.
 
 O passo seguinte com maior valor é recolher mais atividades que preencham as zonas e perfis altimétricos pouco representados, sobretudo Z1, e repetir a validação sem alterar o conjunto de teste de cada fold.
 """
 
 
 def main() -> None:
-    """Compõe e grava as catorze secções do relatório."""
+    """Compõe e grava as quinze secções do relatório."""
     RELATORIOS.mkdir(parents=True, exist_ok=True)
     secoes = [
         secao_objetivo(),
@@ -299,6 +352,7 @@ def main() -> None:
         secao_modelos(),
         secao_resultados(),
         secao_diagnostico(),
+        secao_experiencia_potencia(),
         secao_previsao(),
         secao_limitacoes(),
         secao_conclusoes(),
@@ -307,8 +361,8 @@ def main() -> None:
     destino = RAIZ / "RELATORIO_FINAL.md"
     destino.write_text(conteudo, encoding="utf-8")
     shutil.copyfile(destino, RELATORIOS / "RELATORIO_FINAL.md")
-    print("Relatório criado com 14 secções:")
-    print("objetivo, dados, EDA inicial, qualidade, perfil/alvo, zonas, dataset, validação, modelos, resultados, diagnóstico, previsão, limitações e conclusões")
+    print("Relatório criado com 15 secções:")
+    print("objetivo, dados, EDA inicial, qualidade, perfil/alvo, zonas, dataset, validação, modelos, resultados, diagnóstico, experiência de potência, previsão, limitações e conclusões")
 
 
 if __name__ == "__main__":
