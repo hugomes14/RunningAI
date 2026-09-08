@@ -70,6 +70,7 @@ def normalizar_registos(
                 "distancia_m": registo.get("distance"),
                 "altitude_m": altitude,
                 "fc_bpm": registo.get("heart_rate"),
+                "potencia_w": registo.get("power"),
                 "velocidade_fit_m_s": velocidade,
             }
         )
@@ -86,11 +87,12 @@ def normalizar_registos(
                 "distancia_m",
                 "altitude_m",
                 "fc_bpm",
+                "potencia_w",
                 "velocidade_fit_m_s",
             ]
         )
     df["timestamp"] = pd.to_datetime(df["timestamp"], utc=True, errors="coerce")
-    for coluna in ["distancia_m", "altitude_m", "fc_bpm", "velocidade_fit_m_s"]:
+    for coluna in ["distancia_m", "altitude_m", "fc_bpm", "potencia_w", "velocidade_fit_m_s"]:
         df[coluna] = pd.to_numeric(df[coluna], errors="coerce")
     return df
 

@@ -33,6 +33,7 @@ DEPENDENCIAS = {
     "joblib": "joblib>=1.3",
     "threadpoolctl": "threadpoolctl>=3.2",
     "flask": "Flask>=3.0",
+    "tabulate": "tabulate>=0.9",
 }
 
 

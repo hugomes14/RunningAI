@@ -1,0 +1,196 @@
+{
+  "cobertura": {
+    "atividades_total": 34,
+    "atividades_com_potencia": 17,
+    "trocos_pareados": 2972
+  },
+  "configuracao": {
+    "limites_potencia_w": [
+      220,
+      270,
+      304,
+      339,
+      390,
+      4000
+    ],
+    "ftp_w": 339,
+    "atividade_referencia": "24225591249",
+    "nota": "Limites da atividade mais recente, aplicados a todo o subconjunto para comparar com a metodologia cardíaca atual."
+  },
+  "correlacoes": [
+    {
+      "tipo_zona": "Frequência cardíaca",
+      "pearson_valor_ritmo": -0.2164118037533352,
+      "spearman_valor_ritmo": -0.4201867398196332,
+      "spearman_zona_ritmo": -0.4305416447696399,
+      "n_trocos": 2972,
+      "n_atividades": 17
+    },
+    {
+      "tipo_zona": "Potência",
+      "pearson_valor_ritmo": -0.528090633008465,
+      "spearman_valor_ritmo": -0.5689148848490418,
+      "spearman_zona_ritmo": -0.1076251706472666,
+      "n_trocos": 2972,
+      "n_atividades": 17
+    }
+  ],
+  "correlacoes_por_declive": [
+    {
+      "classe_declive": "descida forte",
+      "variavel": "FC média",
+      "spearman_ritmo": -0.4730685915382692,
+      "n_trocos": 628
+    },
+    {
+      "classe_declive": "descida forte",
+      "variavel": "Zona FC",
+      "spearman_ritmo": -0.47023615492238857,
+      "n_trocos": 628
+    },
+    {
+      "classe_declive": "descida forte",
+      "variavel": "Potência média",
+      "spearman_ritmo": -0.613425314819737,
+      "n_trocos": 628
+    },
+    {
+      "classe_declive": "descida forte",
+      "variavel": "Zona potência",
+      "spearman_ritmo": 0.4571115175835509,
+      "n_trocos": 628
+    },
+    {
+      "classe_declive": "descida",
+      "variavel": "FC média",
+      "spearman_ritmo": -0.6412815632068402,
+      "n_trocos": 465
+    },
+    {
+      "classe_declive": "descida",
+      "variavel": "Zona FC",
+      "spearman_ritmo": -0.6315965112598955,
+      "n_trocos": 465
+    },
+    {
+      "classe_declive": "descida",
+      "variavel": "Potência média",
+      "spearman_ritmo": -0.8971905378734277,
+      "n_trocos": 465
+    },
+    {
+      "classe_declive": "descida",
+      "variavel": "Zona potência",
+      "spearman_ritmo": -0.07827237681551308,
+      "n_trocos": 465
+    },
+    {
+      "classe_declive": "plano",
+      "variavel": "FC média",
+      "spearman_ritmo": -0.6228351556527285,
+      "n_trocos": 768
+    },
+    {
+      "classe_declive": "plano",
+      "variavel": "Zona FC",
+      "spearman_ritmo": -0.6152979682448799,
+      "n_trocos": 768
+    },
+    {
+      "classe_declive": "plano",
+      "variavel": "Potência média",
+      "spearman_ritmo": -0.9090604877802612,
+      "n_trocos": 768
+    },
+    {
+      "classe_declive": "plano",
+      "variavel": "Zona potência",
+      "spearman_ritmo": -0.3556491876048458,
+      "n_trocos": 768
+    },
+    {
+      "classe_declive": "subida",
+      "variavel": "FC média",
+      "spearman_ritmo": -0.7252836351674672,
+      "n_trocos": 455
+    },
+    {
+      "classe_declive": "subida",
+      "variavel": "Zona FC",
+      "spearman_ritmo": -0.7091813962006465,
+      "n_trocos": 455
+    },
+    {
+      "classe_declive": "subida",
+      "variavel": "Potência média",
+      "spearman_ritmo": -0.8947882824958742,
+      "n_trocos": 455
+    },
+    {
+      "classe_declive": "subida",
+      "variavel": "Zona potência",
+      "spearman_ritmo": -0.5926622786720659,
+      "n_trocos": 455
+    },
+    {
+      "classe_declive": "subida forte",
+      "variavel": "FC média",
+      "spearman_ritmo": -0.12509769009557065,
+      "n_trocos": 656
+    },
+    {
+      "classe_declive": "subida forte",
+      "variavel": "Zona FC",
+      "spearman_ritmo": -0.18361441656558705,
+      "n_trocos": 656
+    },
+    {
+      "classe_declive": "subida forte",
+      "variavel": "Potência média",
+      "spearman_ritmo": -0.7927728297267082,
+      "n_trocos": 656
+    },
+    {
+      "classe_declive": "subida forte",
+      "variavel": "Zona potência",
+      "spearman_ritmo": -0.3550350750620441,
+      "n_trocos": 656
+    }
+  ],
+  "melhores_modelos": [
+    {
+      "tipo_zona": "Frequência cardíaca",
+      "modelo": "GradientBoosting",
+      "mae_macro_s_km": 55.927074577704055,
+      "rmse_macro_s_km": 73.17143297871438,
+      "r2_macro": -1.1752928140122805,
+      "tempo_treino_medio_s": 0.4384038551789297,
+      "n_atividades": 17,
+      "melhoria_vs_dummy_pct": 36.13358709735923
+    },
+    {
+      "tipo_zona": "Potência",
+      "modelo": "RandomForest",
+      "mae_macro_s_km": 53.2558925281548,
+      "rmse_macro_s_km": 73.05534067003914,
+      "r2_macro": -2.2119886990434297,
+      "tempo_treino_medio_s": 0.3171747498871649,
+      "n_atividades": 17,
+      "melhoria_vs_dummy_pct": 39.18396684639489
+    }
+  ],
+  "comparacao_pareada_dos_vencedores": {
+    "modelo_fc": "GradientBoosting",
+    "mae_fc": 55.927074577704055,
+    "rmse_fc": 73.17143297871438,
+    "modelo_potencia": "RandomForest",
+    "mae_potencia": 53.2558925281548,
+    "rmse_potencia": 73.05534067003914,
+    "diferenca_potencia_menos_fc_s_km": -2.6711820495492575,
+    "atividades_potencia_melhor": 8,
+    "n_atividades": 17,
+    "bootstrap_95_inferior": -8.943539787175862,
+    "bootstrap_95_superior": 3.488281689854128
+  },
+  "metodologia": "Mesmos troços, alvos e folds por atividade; muda apenas a gama de intensidade."
+}

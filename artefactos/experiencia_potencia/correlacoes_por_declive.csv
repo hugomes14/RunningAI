@@ -1,0 +1,21 @@
+classe_declive,variavel,spearman_ritmo,n_trocos
+descida forte,FC média,-0.4730685915382692,628
+descida forte,Zona FC,-0.47023615492238857,628
+descida forte,Potência média,-0.613425314819737,628
+descida forte,Zona potência,0.4571115175835509,628
+descida,FC média,-0.6412815632068402,465
+descida,Zona FC,-0.6315965112598955,465
+descida,Potência média,-0.8971905378734277,465
+descida,Zona potência,-0.07827237681551308,465
+plano,FC média,-0.6228351556527285,768
+plano,Zona FC,-0.6152979682448799,768
+plano,Potência média,-0.9090604877802612,768
+plano,Zona potência,-0.3556491876048458,768
+subida,FC média,-0.7252836351674672,455
+subida,Zona FC,-0.7091813962006465,455
+subida,Potência média,-0.8947882824958742,455
+subida,Zona potência,-0.5926622786720659,455
+subida forte,FC média,-0.12509769009557065,656
+subida forte,Zona FC,-0.18361441656558705,656
+subida forte,Potência média,-0.7927728297267082,656
+subida forte,Zona potência,-0.3550350750620441,656

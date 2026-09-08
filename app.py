@@ -35,6 +35,7 @@ from prever_percurso import (
 RAIZ = Path(__file__).resolve().parent
 DADOS_BRUTOS = RAIZ / "Dados" / "brutos"
 GRAFICOS = RAIZ / "artefactos" / "graficos"
+EXPERIENCIA_POTENCIA = RAIZ / "artefactos" / "experiencia_potencia"
 RESUMO_ATIVIDADES = RAIZ / "artefactos" / "analise_inicial" / "resumo_atividades.csv"
 EXTENSOES_PERMITIDAS = {".fit", ".csv"}
 LIMITE_UPLOAD_MB = 32
@@ -54,6 +55,12 @@ GRAFICOS_PRINCIPAIS = [
     ("ritmo_por_zona.png", "Ritmo por zona", "Distribuição do ritmo observado em cada zona cardíaca."),
     ("ritmo_declive_zona.png", "Ritmo, zona e declive", "Interação entre intensidade, inclinação e ritmo."),
     ("qualidade_dados.png", "Qualidade dos dados", "Intervalos aceites e rejeitados por atividade."),
+]
+
+GRAFICOS_EXPERIENCIA_POTENCIA = [
+    ("comparacao_mae_fc_potencia.png", "Zonas cardíacas vs. potência", "MAE fora do treino dos modelos nos mesmos troços e atividades."),
+    ("ritmo_por_tipo_zona.png", "Ritmo por tipo de zona", "Distribuição do ritmo nas cinco zonas cardíacas e de potência."),
+    ("cobertura_potencia.png", "Cobertura de potência", "Percentagem de registos com potência nas atividades elegíveis."),
 ]
 
 
@@ -294,9 +301,17 @@ def graficos():
         atividades.append(
             {"nome": caminho.name, "titulo": caminho.stem.replace("atividade_", "Atividade "), "versao": caminho.stat().st_mtime_ns}
         )
+    experiencia_potencia = []
+    for nome, titulo, descricao in GRAFICOS_EXPERIENCIA_POTENCIA:
+        caminho = EXPERIENCIA_POTENCIA / nome
+        if caminho.exists():
+            experiencia_potencia.append(
+                {"nome": nome, "titulo": titulo, "descricao": descricao, "versao": caminho.stat().st_mtime_ns}
+            )
     return render_template(
         "graficos.html", pagina="graficos", graficos=principais,
-        atividades=atividades, modelo=contexto_modelo(),
+        atividades=atividades, experiencia_potencia=experiencia_potencia,
+        modelo=contexto_modelo(),
     )
 
 
@@ -307,6 +322,14 @@ def ficheiro_grafico(nome: str):
     if nome not in permitidos:
         abort(404)
     return send_from_directory(GRAFICOS, nome, max_age=0)
+
+
+@app.get("/ficheiros/experiencia-potencia/<path:nome>")
+def ficheiro_experiencia_potencia(nome: str):
+    permitidos = {item[0] for item in GRAFICOS_EXPERIENCIA_POTENCIA}
+    if nome not in permitidos:
+        abort(404)
+    return send_from_directory(EXPERIENCIA_POTENCIA, nome, max_age=0)
 
 
 @app.errorhandler(413)

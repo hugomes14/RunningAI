@@ -112,6 +112,16 @@ Para calcular todas as zonas:
 python prever_percurso.py --percurso Dados/brutos/ATIVIDADE.fit --todas-zonas
 ```
 
+## Experiência com zonas de potência
+
+Os FIT que contenham potência podem ser usados numa comparação pareada entre zonas cardíacas e zonas de potência:
+
+```bash
+python experimentar_zonas_potencia.py
+```
+
+O script usa os mesmos troços e folds nas duas alternativas e guarda métricas, previsões fora do treino, gráficos e um relatório em `artefactos/experiencia_potencia/`.
+
 ## Resultados atuais
 
 Na execução documentada em `RELATORIO_FINAL.md` foram usadas 34 atividades e 5 376 amostras. O Gradient Boosting obteve o menor MAE médio por atividade, com 68,58 s/km, e uma melhoria de 30,6% face ao modelo baseline.

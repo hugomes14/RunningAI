@@ -1,0 +1,13 @@
+{
+  "limites_potencia_w": [
+    220,
+    270,
+    304,
+    339,
+    390,
+    4000
+  ],
+  "ftp_w": 339,
+  "atividade_referencia": "24225591249",
+  "nota": "Limites da atividade mais recente, aplicados a todo o subconjunto para comparar com a metodologia cardíaca atual."
+}
