@@ -15,7 +15,10 @@ from sklearn.base import clone
 from sklearn.inspection import permutation_importance
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 
-from treinar_modelos import FEATURES, ALVO, _ajustar, calcular_pesos, criar_modelos
+try:
+    from .treinar_modelos import FEATURES, ALVO, _ajustar, calcular_pesos, criar_modelos
+except ImportError:  # Permite executar diretamente: python visualizar_resultados.py
+    from treinar_modelos import FEATURES, ALVO, _ajustar, calcular_pesos, criar_modelos
 
 
 RAIZ = Path(__file__).resolve().parent

@@ -22,7 +22,7 @@ A página inicial apresenta os serviços da plataforma. O **RitmoAI** está disp
 
 ## RitmoAI
 
-- Escolher uma atividade existente em `Dados/brutos/` ou enviar um ficheiro `.fit`/`.csv`.
+- Escolher uma atividade existente em `RitmoAI/Dados/brutos/` ou enviar um ficheiro `.fit`/`.csv`.
 - Um CSV deve conter as colunas `distancia_m` e `altitude_m`.
 - Selecionar uma zona cardíaca entre Z1 e Z5.
 - Consultar o ritmo médio, tempo estimado, distância, subida acumulada, gráfico e previsão por troço.

@@ -1,6 +1,6 @@
 {
   "percurso": "Dados/brutos/24225591249_ACTIVITY.fit",
-  "modelo": "/home/hugomes/projects/AI Eng/1 - Projeto Prático /artefactos/modelos/final/modelo_ritmo_final.joblib",
+  "modelo": "/home/hugomes/projects/AI Eng/Projeto Prático/RitmoAI/artefactos/modelos/final/modelo_ritmo_final.joblib",
   "zonas": {
     "Z1": {
       "distancia_valida_m": 5199.35,

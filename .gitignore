@@ -9,16 +9,16 @@ __pycache__/
 venv/
 
 # Artefactos gerados (modelos treinados ~1.2 GB)
-artefactos/modelos/
+RitmoAI/artefactos/modelos/
 
 # Dados (ficheiros FIT brutos e CSVs processados)
-Dados/
+RitmoAI/Dados/
 
 # Dados detalhados da experiência de potência
-artefactos/experiencia_potencia/cobertura_potencia.csv
-artefactos/experiencia_potencia/metricas_por_atividade.csv
-artefactos/experiencia_potencia/previsoes_fora_do_treino.csv
-artefactos/experiencia_potencia/trocos_pareados.csv
+RitmoAI/artefactos/experiencia_potencia/cobertura_potencia.csv
+RitmoAI/artefactos/experiencia_potencia/metricas_por_atividade.csv
+RitmoAI/artefactos/experiencia_potencia/previsoes_fora_do_treino.csv
+RitmoAI/artefactos/experiencia_potencia/trocos_pareados.csv
 
 # Sistema de ficheiros / editor
 .DS_Store

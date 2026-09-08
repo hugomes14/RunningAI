@@ -12,8 +12,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-from analisar_fits import ler_fit, normalizar_registos
-from preparar_dados import FEATURES, perfil_percurso
+try:
+    from .analisar_fits import ler_fit, normalizar_registos
+    from .preparar_dados import FEATURES, perfil_percurso
+except ImportError:  # Permite executar diretamente: python prever_percurso.py
+    from analisar_fits import ler_fit, normalizar_registos
+    from preparar_dados import FEATURES, perfil_percurso
 
 
 RAIZ = Path(__file__).resolve().parent

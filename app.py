@@ -21,8 +21,8 @@ import pandas as pd
 from flask import Flask, jsonify, render_template, request
 from werkzeug.utils import secure_filename
 
-from preparar_dados import perfil_percurso
-from prever_percurso import (
+from RitmoAI.preparar_dados import perfil_percurso
+from RitmoAI.prever_percurso import (
     DADOS_TREINO,
     MODELO_PADRAO,
     carregar_percurso,
@@ -33,8 +33,9 @@ from prever_percurso import (
 
 
 RAIZ = Path(__file__).resolve().parent
-DADOS_BRUTOS = RAIZ / "Dados" / "brutos"
-RESUMO_ATIVIDADES = RAIZ / "artefactos" / "analise_inicial" / "resumo_atividades.csv"
+PASTA_RITMO_AI = RAIZ / "RitmoAI"
+DADOS_BRUTOS = PASTA_RITMO_AI / "Dados" / "brutos"
+RESUMO_ATIVIDADES = PASTA_RITMO_AI / "artefactos" / "analise_inicial" / "resumo_atividades.csv"
 EXTENSOES_PERMITIDAS = {".fit", ".csv"}
 LIMITE_UPLOAD_MB = 32
 LOCK_GRAFICO = Lock()

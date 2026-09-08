@@ -11,8 +11,26 @@ import pandas as pd
 from sklearn.base import clone
 from sklearn.model_selection import LeaveOneGroupOut
 
-import preparar_dados as preparacao
-from treinar_modelos import ALVO, FEATURES, _ajustar, calcular_metricas, calcular_pesos, criar_modelos
+try:
+    from . import preparar_dados as preparacao
+    from .treinar_modelos import (
+        ALVO,
+        FEATURES,
+        _ajustar,
+        calcular_metricas,
+        calcular_pesos,
+        criar_modelos,
+    )
+except ImportError:  # Permite executar diretamente: python analisar_sensibilidade_estabilidade.py
+    import preparar_dados as preparacao
+    from treinar_modelos import (
+        ALVO,
+        FEATURES,
+        _ajustar,
+        calcular_metricas,
+        calcular_pesos,
+        criar_modelos,
+    )
 
 
 RAIZ = Path(__file__).resolve().parent

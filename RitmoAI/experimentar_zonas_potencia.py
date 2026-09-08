@@ -34,16 +34,28 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVR
 
-from analisar_fits import ler_fit, normalizar_registos
-from preparar_dados import (
-    COBERTURA_TROCO_MAX,
-    COBERTURA_TROCO_MIN,
-    COMPRIMENTO_TROCO_M,
-    INTERVALOS_MIN_POR_TROCO,
-    SALTO_TEMPORAL_MAX_S,
-    TEMPO_INICIAL_EXCLUIDO_S,
-    perfil_percurso,
-)
+try:
+    from .analisar_fits import ler_fit, normalizar_registos
+    from .preparar_dados import (
+        COBERTURA_TROCO_MAX,
+        COBERTURA_TROCO_MIN,
+        COMPRIMENTO_TROCO_M,
+        INTERVALOS_MIN_POR_TROCO,
+        SALTO_TEMPORAL_MAX_S,
+        TEMPO_INICIAL_EXCLUIDO_S,
+        perfil_percurso,
+    )
+except ImportError:  # Permite executar diretamente: python experimentar_zonas_potencia.py
+    from analisar_fits import ler_fit, normalizar_registos
+    from preparar_dados import (
+        COBERTURA_TROCO_MAX,
+        COBERTURA_TROCO_MIN,
+        COMPRIMENTO_TROCO_M,
+        INTERVALOS_MIN_POR_TROCO,
+        SALTO_TEMPORAL_MAX_S,
+        TEMPO_INICIAL_EXCLUIDO_S,
+        perfil_percurso,
+    )
 
 
 RAIZ = Path(__file__).resolve().parent
