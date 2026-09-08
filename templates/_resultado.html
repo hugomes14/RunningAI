@@ -1,0 +1,33 @@
+<div class="result-content enter">
+  <div class="result-head">
+    <div><p class="eyebrow">PREVISÃO CONCLUÍDA</p><h2>{{ previsao.nome }}</h2><p>Zona Z{{ previsao.zona }}</p></div>
+    <span class="support-badge {{ 'good' if previsao.suporte_pct >= 80 else 'warn' }}">{{ "%.0f"|format(previsao.suporte_pct) }}% com suporte</span>
+  </div>
+
+  <div class="metric-grid">
+    <article class="metric-primary"><span>Ritmo médio</span><strong>{{ previsao.ritmo }}</strong><small>previsão sem paragens</small></article>
+    <article><span>Tempo</span><strong>{{ previsao.tempo }}</strong></article>
+    <article><span>Distância</span><strong>{{ "%.2f"|format(previsao.distancia_km) }} km</strong></article>
+    <article><span>Subida</span><strong>{{ "%.0f"|format(previsao.subida_m) }} m</strong></article>
+  </div>
+
+  <div class="card chart-card">
+    <div class="card-head"><div><h3>Perfil e ritmo previsto</h3><p>Os pontos vermelhos assinalam pouco suporte histórico.</p></div></div>
+    <img src="data:image/png;base64,{{ previsao.grafico }}" alt="Perfil de altitude, declive e ritmo previsto">
+  </div>
+
+  <div class="card table-card">
+    <div class="table-title"><div><h3>Previsão por troço</h3><p>Ritmo estimado ao longo do percurso.</p></div><span>{{ previsao.trocos|length }} troços</span></div>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Início</th><th>Altitude</th><th>Declive</th><th>Ritmo</th><th>Suporte</th></tr></thead>
+        <tbody>
+          {% for troco in previsao.trocos %}
+          <tr><td>{{ troco.inicio_km }} km</td><td>{{ troco.altitude_m }} m</td><td>{{ troco.declive_pct }}</td><td><strong>{{ troco.ritmo }}</strong></td><td><span class="row-status {{ 'low' if troco.suporte == 'Baixo' else '' }}">{{ troco.suporte }}</span></td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <p class="notice">A previsão assume permanência na zona escolhida e não simula a resposta cardíaca real durante o esforço.</p>
+</div>

@@ -311,6 +311,10 @@ def ficheiro_grafico(nome: str):
 
 @app.errorhandler(413)
 def upload_demasiado_grande(_erro):
+    if request.path == "/api/prever":
+        return jsonify(
+            ok=False, erro=f"O ficheiro excede o limite de {LIMITE_UPLOAD_MB} MB."
+        ), 413
     return render_template(
         "erro.html", pagina="previsao", codigo=413,
         mensagem=f"O ficheiro excede o limite de {LIMITE_UPLOAD_MB} MB.",

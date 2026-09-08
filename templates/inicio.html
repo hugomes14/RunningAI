@@ -1,30 +1,30 @@
 {% extends "base.html" %}
 {% block title %}Previsão · PaceLab{% endblock %}
 {% block content %}
-<section class="hero">
+<section class="dashboard-intro">
   <div>
     <p class="eyebrow">PLANEAMENTO DE CORRIDA</p>
-    <h1>Prevê o ritmo antes de começares.</h1>
-    <p>Escolhe um percurso e a zona cardíaca que pretendes manter. O modelo estima o ritmo em cada troço usando apenas o perfil altimétrico.</p>
+    <h1>Ritmo previsto para o teu percurso.</h1>
   </div>
-  <div class="hero-stat">
-    <span>Erro médio fora do treino</span>
-    <strong>{{ "%.1f"|format(modelo.mae) }}</strong>
-    <small>segundos por quilómetro</small>
-  </div>
+  <p>Seleciona o percurso e a intensidade. A previsão usa o perfil altimétrico e o modelo treinado nas tuas atividades.</p>
 </section>
 
-<section class="card form-card">
-  <form method="post" enctype="multipart/form-data" id="prediction-form">
-    <div class="form-grid">
-      <fieldset>
-        <legend>1. Percurso</legend>
+<div class="dashboard">
+  <aside class="card control-panel">
+    <form method="post" enctype="multipart/form-data" id="prediction-form" action="{{ url_for('inicio') }}">
+      <div class="control-heading">
+        <span>Configuração</span>
+        <small>FIT ou CSV · Z1–Z5</small>
+      </div>
+
+      <fieldset class="control-group">
+        <legend><span>1</span> Percurso</legend>
         <div class="source-switch" role="radiogroup" aria-label="Origem do percurso">
           <label><input type="radio" name="origem" value="existente" {% if request.form.get('origem', 'existente') == 'existente' %}checked{% endif %}><span>Existente</span></label>
           <label><input type="radio" name="origem" value="upload" {% if request.form.get('origem') == 'upload' %}checked{% endif %}><span>Upload</span></label>
         </div>
         <div data-source="existente">
-          <label for="percurso_existente">Atividade Garmin</label>
+          <label class="field-label" for="percurso_existente">Atividade Garmin</label>
           <select id="percurso_existente" name="percurso_existente">
             {% for percurso in percursos %}
             <option value="{{ percurso.nome }}" {% if percurso.nome == percurso_selecionado %}selected{% endif %}>
@@ -34,62 +34,53 @@
           </select>
         </div>
         <div data-source="upload" class="upload-field">
-          <label for="percurso_upload">Ficheiro FIT ou CSV</label>
-          <input id="percurso_upload" type="file" name="percurso_upload" accept=".fit,.csv">
-          <small>CSV com as colunas distancia_m e altitude_m · máximo 32 MB</small>
+          <label class="file-drop" for="percurso_upload">
+            <span class="upload-icon">↑</span>
+            <strong>Escolher percurso</strong>
+            <small data-file-name>FIT ou CSV · máximo 32 MB</small>
+          </label>
+          <input id="percurso_upload" class="visually-hidden" type="file" name="percurso_upload" accept=".fit,.csv">
         </div>
       </fieldset>
 
-      <fieldset>
-        <legend>2. Zona cardíaca</legend>
-        <div class="zone-picker">
+      <fieldset class="control-group">
+        <legend><span>2</span> Zona cardíaca</legend>
+        <div class="zone-list">
           {% set limites = [(1,'103–124','Recuperação'),(2,'124–144','Aeróbia leve'),(3,'144–165','Aeróbia'),(4,'165–185','Limiar'),(5,'185–206','Máxima')] %}
           {% for zona, bpm, nome in limites %}
-          <label class="zone zone-{{ zona }}">
+          <label class="zone-row zone-{{ zona }}">
             <input type="radio" name="zona" value="{{ zona }}" {% if zona_selecionada|int == zona %}checked{% endif %}>
-            <span><strong>Z{{ zona }}</strong><b>{{ bpm }} bpm</b><small>{{ nome }}</small></span>
+            <span class="zone-dot"></span>
+            <strong>Z{{ zona }}</strong>
+            <span class="zone-copy"><b>{{ nome }}</b><small>{{ bpm }} bpm</small></span>
+            <span class="zone-check">✓</span>
           </label>
           {% endfor %}
         </div>
       </fieldset>
-    </div>
-    <button class="primary-button" type="submit"><span>Calcular previsão</span><b>→</b></button>
-  </form>
-</section>
 
-{% if erro %}
-<div class="alert" role="alert"><strong>Não foi possível calcular.</strong><span>{{ erro }}</span></div>
-{% endif %}
+      <button class="primary-button full" type="submit">
+        <span>Calcular previsão</span><b aria-hidden="true">→</b>
+      </button>
+      <p class="form-note">Sem potência, velocidade ou FC exata como entrada do modelo.</p>
+    </form>
+  </aside>
 
-{% if previsao %}
-<section class="results" aria-live="polite">
-  <div class="section-heading">
-    <div><p class="eyebrow">RESULTADO</p><h2>{{ previsao.nome }} · Z{{ previsao.zona }}</h2></div>
-    <span class="support-badge {{ 'good' if previsao.suporte_pct >= 80 else 'warn' }}">{{ "%.0f"|format(previsao.suporte_pct) }}% com suporte</span>
-  </div>
-  <div class="metric-grid">
-    <article><span>Ritmo médio</span><strong>{{ previsao.ritmo }}</strong></article>
-    <article><span>Tempo estimado</span><strong>{{ previsao.tempo }}</strong></article>
-    <article><span>Distância</span><strong>{{ "%.2f"|format(previsao.distancia_km) }} km</strong></article>
-    <article><span>Subida acumulada</span><strong>{{ "%.0f"|format(previsao.subida_m) }} m</strong></article>
-  </div>
-  <div class="card chart-card">
-    <img src="data:image/png;base64,{{ previsao.grafico }}" alt="Perfil de altitude, declive e ritmo previsto">
-  </div>
-  <div class="card table-card">
-    <div class="table-title"><div><h3>Previsão por troço</h3><p>Os marcadores de suporte baixo indicam regiões pouco representadas no treino.</p></div><span>{{ previsao.trocos|length }} troços</span></div>
-    <div class="table-scroll">
-      <table>
-        <thead><tr><th>Início</th><th>Altitude</th><th>Declive</th><th>Ritmo</th><th>Suporte</th></tr></thead>
-        <tbody>
-          {% for troco in previsao.trocos %}
-          <tr><td>{{ troco.inicio_km }} km</td><td>{{ troco.altitude_m }} m</td><td>{{ troco.declive_pct }}</td><td><strong>{{ troco.ritmo }}</strong></td><td><span class="row-status {{ 'low' if troco.suporte == 'Baixo' else '' }}">{{ troco.suporte }}</span></td></tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-  </div>
-  <p class="notice">A previsão assume permanência na zona escolhida e não simula a resposta cardíaca real durante o esforço.</p>
-</section>
-{% endif %}
+  <section class="result-column" id="results-panel" aria-live="polite" aria-busy="false">
+    {% if erro %}
+      <div class="alert" role="alert"><strong>Não foi possível calcular</strong><span>{{ erro }}</span></div>
+    {% elif previsao %}
+      {% include "_resultado.html" %}
+    {% else %}
+      <div class="card empty-result">
+        <div class="route-illustration" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+          <b>●</b><i>●</i>
+        </div>
+        <div><p class="eyebrow">PRONTO PARA PREVER</p><h2>O resultado aparece aqui.</h2><p>Escolhe um percurso e uma zona cardíaca. O cálculo demora apenas alguns segundos.</p></div>
+        <div class="empty-metrics"><span></span><span></span><span></span></div>
+      </div>
+    {% endif %}
+  </section>
+</div>
 {% endblock %}
