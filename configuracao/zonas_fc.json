@@ -1,0 +1,17 @@
+{
+  "idade": null,
+  "fc_max_estimada": 206,
+  "limites_fc_bpm": [103, 124, 144, 165, 185, 206],
+  "zonas": [
+    {"zona": 1, "nome": "Z1", "limite_inferior_bpm": 103, "limite_superior_bpm": 124, "zona_aberta": 0},
+    {"zona": 2, "nome": "Z2", "limite_inferior_bpm": 124, "limite_superior_bpm": 144, "zona_aberta": 0},
+    {"zona": 3, "nome": "Z3", "limite_inferior_bpm": 144, "limite_superior_bpm": 165, "zona_aberta": 0},
+    {"zona": 4, "nome": "Z4", "limite_inferior_bpm": 165, "limite_superior_bpm": 185, "zona_aberta": 0},
+    {"zona": 5, "nome": "Z5", "limite_inferior_bpm": 185, "limite_superior_bpm": 206, "zona_aberta": 0}
+  ],
+  "origem": "Limites pessoais Garmin do campo hr_zone_high_boundary no time_in_zone da atividade 24225591249_ACTIVITY.fit; a mesma configuração consta nas três atividades mais recentes.",
+  "ficheiro_referencia": "Dados/brutos/24225591249_ACTIVITY.fit",
+  "data_referencia": "2026-09-03T16:31:29Z",
+  "data_criacao": "2026-09-08",
+  "notas": "A configuração atual do Garmin é aplicada de forma consistente a todas as atividades históricas. Os FIT mais antigos contêm limites diferentes; esta alteração histórica deve ser mencionada como limitação."
+}

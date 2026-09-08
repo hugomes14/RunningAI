@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Gráficos de treino · PaceLab{% endblock %}
+{% block content %}
+<section class="page-intro">
+  <p class="eyebrow">DIAGNÓSTICO DO MODELO</p>
+  <h1>Gráficos de treino</h1>
+  <p>Resultados produzidos a partir de previsões fora do treino, com uma atividade completa deixada de fora em cada fold.</p>
+</section>
+
+<section class="gallery">
+  {% for grafico in graficos %}
+  <article class="card graph-card">
+    <div><h2>{{ grafico.titulo }}</h2><p>{{ grafico.descricao }}</p></div>
+    <a href="{{ url_for('ficheiro_grafico', nome=grafico.nome, v=grafico.versao) }}" target="_blank" title="Abrir imagem completa">
+      <img loading="lazy" src="{{ url_for('ficheiro_grafico', nome=grafico.nome, v=grafico.versao) }}" alt="{{ grafico.titulo }}">
+    </a>
+  </article>
+  {% endfor %}
+</section>
+
+<details class="card activity-section">
+  <summary><span><strong>Perfis das atividades</strong><small>{{ atividades|length }} gráficos individuais</small></span><b>+</b></summary>
+  <div class="activity-gallery">
+    {% for grafico in atividades %}
+    <a href="{{ url_for('ficheiro_grafico', nome=grafico.nome, v=grafico.versao) }}" target="_blank">
+      <img loading="lazy" src="{{ url_for('ficheiro_grafico', nome=grafico.nome, v=grafico.versao) }}" alt="{{ grafico.titulo }}">
+      <span>{{ grafico.titulo }}</span>
+    </a>
+    {% endfor %}
+  </div>
+</details>
+{% endblock %}

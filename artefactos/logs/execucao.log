@@ -1,0 +1,520 @@
+
+=== Execução iniciada em 2026-09-08T15:28:19 ===
+
+--- analise_fits (13.77s) | OK ---
+Atividades processadas: 16
+Atividades excluídas: 0
+atividade_id  distancia_m  ritmo_medio_s_km  fc_media_bpm
+ 22664327478     15510.42        583.224901    179.108356
+ 22910890927     13283.63        446.256799    166.171984
+ 22980101796     18005.96        450.556030    155.768009
+ 23059351180      5012.56        313.213208    177.033736
+ 23064485029     14007.43        512.370318    141.002478
+ 23095730671      6556.17        351.424688    160.665418
+ 23119535339      9008.31        489.992018    134.760914
+ 23161986328     18860.00        532.997207    177.747448
+ 23192176528      5526.00        521.893080    130.602285
+ 23219229363      7267.45        395.427738    154.440291
+ 23299035298      9433.00        392.876073    158.459671
+ 23356119297      6438.33        374.165350    161.979244
+ 23379302381      5008.72        294.686067    178.715832
+ 23996168837      7007.13        476.362510    165.412027
+ 24069625931     11628.92        405.865038    168.005217
+ 24225591249      5199.35        386.009790    165.690323
+
+[stderr]
+2026-09-08 15:28:20,409 | INFO | Atividade 22664327478: 1855 registos
+2026-09-08 15:28:21,270 | INFO | Atividade 22910890927: 6175 registos
+2026-09-08 15:28:22,534 | INFO | Atividade 22980101796: 8121 registos
+2026-09-08 15:28:22,884 | INFO | Atividade 23059351180: 1571 registos
+2026-09-08 15:28:24,039 | INFO | Atividade 23064485029: 7264 registos
+2026-09-08 15:28:24,495 | INFO | Atividade 23095730671: 2403 registos
+2026-09-08 15:28:25,104 | INFO | Atividade 23119535339: 4421 registos
+2026-09-08 15:28:25,822 | INFO | Atividade 23161986328: 11265 registos
+2026-09-08 15:28:26,434 | INFO | Atividade 23192176528: 2889 registos
+2026-09-08 15:28:26,973 | INFO | Atividade 23219229363: 2889 registos
+2026-09-08 15:28:27,540 | INFO | Atividade 23299035298: 3707 registos
+2026-09-08 15:28:27,989 | INFO | Atividade 23356119297: 2409 registos
+2026-09-08 15:28:28,344 | INFO | Atividade 23379302381: 1478 registos
+2026-09-08 15:28:28,923 | INFO | Atividade 23996168837: 3359 registos
+2026-09-08 15:28:29,921 | INFO | Atividade 24069625931: 4792 registos
+2026-09-08 15:29:07,823 | INFO | Atividade 24225591249: 2015 registos
+
+--- preparacao (1.74s) | OK ---
+Atividades com amostras: 15
+Amostras válidas: 1687
+Amostras por zona:
+zona_ordem
+1      6
+2    344
+3    546
+4    642
+5    149
+Confirmação: nove features permitidas, sem FC exata, velocidade ou potência.
+
+--- eda_modelo (2.59s) | OK ---
+Amostras: 1687
+Atividades: 15
+Zonas cobertas: [1, 2, 3, 4, 5]
+Outliers IQR detetados: 234 (preservados)
+
+--- treino (31.66s) | OK ---
+Fold 1/15 — atividade 22910890927
+Fold 2/15 — atividade 22980101796
+Fold 3/15 — atividade 23059351180
+Fold 4/15 — atividade 23064485029
+Fold 5/15 — atividade 23095730671
+Fold 6/15 — atividade 23119535339
+Fold 7/15 — atividade 23161986328
+Fold 8/15 — atividade 23192176528
+Fold 9/15 — atividade 23219229363
+Fold 10/15 — atividade 23299035298
+Fold 11/15 — atividade 23356119297
+Fold 12/15 — atividade 23379302381
+Fold 13/15 — atividade 23996168837
+Fold 14/15 — atividade 24069625931
+Fold 15/15 — atividade 24225591249
+
+Ranking dos modelos:
+              modelo  mae_macro_s_km  rmse_macro_s_km   r2_macro  melhoria_vs_dummy_pct
+    GradientBoosting       54.097135        70.976158  -2.262305              34.669414
+HistGradientBoosting       57.176705        73.467329  -2.089503              30.950361
+               Ridge       59.033152        75.467461  -5.752239              28.708417
+        RandomForest       60.083745        77.525763  -2.145548              27.439664
+             SVR_RBF       73.129349        91.551552 -12.027650              11.685097
+               Dummy       82.805219        99.836274 -21.360965               0.000000
+
+Modelo vencedor: GradientBoosting
+MAE macro OOF: 54.10 s/km (00:54)
+Melhoria face ao baseline: 34.7%
+
+--- visualizacao (39.15s) | OK ---
+Três features mais importantes:
+           feature  importancia_media_s_km
+       declive_pct                8.330661
+subida_acumulada_m                4.543142
+  altitude_media_m                0.075189
+Curva de aprendizagem: 2 a 14 atividades de treino
+
+--- previsão (1.92s) | OK ---
+{
+  "percurso": "Dados/brutos/24225591249_ACTIVITY.fit",
+  "modelo": "/home/hugomes/projects/AI Eng/1 - Projeto Prático /artefactos/modelos/final/modelo_ritmo_final.joblib",
+  "zonas": {
+    "Z1": {
+      "distancia_valida_m": 5199.35,
+      "tempo_estimado_sem_paragens_s": 2590.1628179942463,
+      "ritmo_medio_s_km": 498.17050554285555,
+      "ritmo_medio_mmss_km": "08:18/km",
+      "distancia_pouco_suporte_m": 5199.35,
+      "trocos_invalidos": 0
+    },
+    "Z2": {
+      "distancia_valida_m": 5199.35,
+      "tempo_estimado_sem_paragens_s": 2480.051095745143,
+      "ritmo_medio_s_km": 476.9925270937988,
+      "ritmo_medio_mmss_km": "07:57/km",
+      "distancia_pouco_suporte_m": 100.0,
+      "trocos_invalidos": 0
+    },
+    "Z3": {
+      "distancia_valida_m": 5199.35,
+      "tempo_estimado_sem_paragens_s": 2110.619922262589,
+      "ritmo_medio_s_km": 405.93918898758284,
+      "ritmo_medio_mmss_km": "06:46/km",
+      "distancia_pouco_suporte_m": 100.0,
+      "trocos_invalidos": 0
+    },
+    "Z4": {
+      "distancia_valida_m": 5199.35,
+      "tempo_estimado_sem_paragens_s": 1736.2439665588536,
+      "ritmo_medio_s_km": 333.93481234363014,
+      "ritmo_medio_mmss_km": "05:34/km",
+      "distancia_pouco_suporte_m": 700.0,
+      "trocos_invalidos": 0
+    },
+    "Z5": {
+      "distancia_valida_m": 5199.35,
+      "tempo_estimado_sem_paragens_s": 1686.795179664893,
+      "ritmo_medio_s_km": 324.4242414272732,
+      "ritmo_medio_mmss_km": "05:24/km",
+      "distancia_pouco_suporte_m": 1850.0,
+      "trocos_invalidos": 0
+    }
+  },
+  "aviso": "A previsão assume permanência na zona escolhida e não simula a resposta cardíaca real durante o esforço."
+}
+AVISO: A previsão assume permanência na zona escolhida e não simula a resposta cardíaca real durante o esforço.
+
+--- relatorio (0.39s) | OK ---
+Relatório criado com 14 secções:
+objetivo, dados, EDA inicial, qualidade, perfil/alvo, zonas, dataset, validação, modelos, resultados, diagnóstico, previsão, limitações e conclusões
+
+=== Resumo: 7 OK, 0 falhas, 91.22s ===
+
+=== Execução iniciada em 2026-09-08T15:42:10 ===
+
+--- analise_fits (18.66s) | OK ---
+Atividades processadas: 25
+Atividades excluídas: 0
+atividade_id  distancia_m  ritmo_medio_s_km  fc_media_bpm
+ 21648150892     15080.72        444.736717    173.632703
+ 21909979898      5998.58        517.098731    136.702532
+ 21946978854     12829.43        511.549635    153.058261
+ 22118031985      8164.75        503.744159    146.119850
+ 22259327797     12985.23        440.123956    174.814751
+ 22582028728     10574.76        457.814763    170.818514
+ 22610623020      5352.71        572.793253    136.537864
+ 22664327478     15510.42        583.224901    179.108356
+ 22882313372      5668.41        500.140251    136.414376
+ 22910890927     13283.63        446.256799    166.171984
+ 22943992812      6706.22        402.812679    162.035846
+ 22980101796     18005.96        450.556030    155.768009
+ 23059351180      5012.56        313.213208    177.033736
+ 23064485029     14007.43        512.370318    141.002478
+ 23095730671      6556.17        351.424688    160.665418
+ 23119535339      9008.31        489.992018    134.760914
+ 23161986328     18860.00        532.997207    177.747448
+ 23192176528      5526.00        521.893080    130.602285
+ 23219229363      7267.45        395.427738    154.440291
+ 23299035298      9433.00        392.876073    158.459671
+ 23356119297      6438.33        374.165350    161.979244
+ 23379302381      5008.72        294.686067    178.715832
+ 23996168837      7007.13        476.362510    165.412027
+ 24069625931     11628.92        405.865038    168.005217
+ 24225591249      5199.35        386.009790    165.690323
+
+[stderr]
+2026-09-08 15:42:11,852 | INFO | Atividade 21648150892: 1217 registos
+2026-09-08 15:42:12,394 | INFO | Atividade 21909979898: 632 registos
+2026-09-08 15:42:13,044 | INFO | Atividade 21946978854: 1150 registos
+2026-09-08 15:42:13,669 | INFO | Atividade 22118031985: 801 registos
+2026-09-08 15:42:14,200 | INFO | Atividade 22259327797: 1166 registos
+2026-09-08 15:42:14,616 | INFO | Atividade 22582028728: 821 registos
+2026-09-08 15:42:15,072 | INFO | Atividade 22610623020: 515 registos
+2026-09-08 15:42:15,569 | INFO | Atividade 22664327478: 1855 registos
+2026-09-08 15:42:16,031 | INFO | Atividade 22882313372: 2838 registos
+2026-09-08 15:42:16,805 | INFO | Atividade 22910890927: 6175 registos
+2026-09-08 15:42:16,736 | INFO | Atividade 22943992812: 2706 registos
+2026-09-08 15:42:17,654 | INFO | Atividade 22980101796: 8121 registos
+2026-09-08 15:42:18,247 | INFO | Atividade 23059351180: 1571 registos
+2026-09-08 15:42:19,068 | INFO | Atividade 23064485029: 7264 registos
+2026-09-08 15:42:19,476 | INFO | Atividade 23095730671: 2403 registos
+2026-09-08 15:42:20,019 | INFO | Atividade 23119535339: 4421 registos
+2026-09-08 15:42:21,277 | INFO | Atividade 23161986328: 11265 registos
+2026-09-08 15:42:21,736 | INFO | Atividade 23192176528: 2889 registos
+2026-09-08 15:42:22,022 | INFO | Atividade 23219229363: 2889 registos
+2026-09-08 15:42:22,555 | INFO | Atividade 23299035298: 3707 registos
+2026-09-08 15:42:22,971 | INFO | Atividade 23356119297: 2409 registos
+2026-09-08 15:42:23,315 | INFO | Atividade 23379302381: 1478 registos
+2026-09-08 15:42:23,846 | INFO | Atividade 23996168837: 3359 registos
+2026-09-08 15:42:24,781 | INFO | Atividade 24069625931: 4792 registos
+2026-09-08 15:42:25,287 | INFO | Atividade 24225591249: 2015 registos
+
+--- preparacao (2.44s) | OK ---
+Atividades com amostras: 17
+Amostras válidas: 1812
+Amostras por zona:
+zona_ordem
+1      6
+2    416
+3    569
+4    652
+5    169
+Confirmação: nove features permitidas, sem FC exata, velocidade ou potência.
+
+--- eda_modelo (2.75s) | OK ---
+Amostras: 1812
+Atividades: 17
+Zonas cobertas: [1, 2, 3, 4, 5]
+Outliers IQR detetados: 241 (preservados)
+
+--- treino (101.33s) | OK ---
+Fold 1/17 — atividade 22882313372
+Fold 2/17 — atividade 22910890927
+Fold 3/17 — atividade 22943992812
+Fold 4/17 — atividade 22980101796
+Fold 5/17 — atividade 23059351180
+Fold 6/17 — atividade 23064485029
+Fold 7/17 — atividade 23095730671
+Fold 8/17 — atividade 23119535339
+Fold 9/17 — atividade 23161986328
+Fold 10/17 — atividade 23192176528
+Fold 11/17 — atividade 23219229363
+Fold 12/17 — atividade 23299035298
+Fold 13/17 — atividade 23356119297
+Fold 14/17 — atividade 23379302381
+Fold 15/17 — atividade 23996168837
+Fold 16/17 — atividade 24069625931
+Fold 17/17 — atividade 24225591249
+
+Ranking dos modelos:
+              modelo  mae_macro_s_km  rmse_macro_s_km   r2_macro  melhoria_vs_dummy_pct
+    GradientBoosting       50.544262        67.800764  -1.410363              40.185906
+        RandomForest       55.264395        72.531966  -1.498999              34.600100
+HistGradientBoosting       55.504463        71.731067  -1.622861              34.316003
+               Ridge       57.444716        73.907979  -4.700949              32.019908
+    RedeNeuronal_MLP       66.537549        83.110192  -2.825288              21.259447
+             SVR_RBF       73.245496        91.728132 -10.523241              13.321260
+               Dummy       84.502262       101.275237 -19.655567               0.000000
+
+Modelo vencedor: GradientBoosting
+MAE macro OOF: 50.54 s/km (00:51)
+Melhoria face ao baseline: 40.2%
+
+[stderr]
+/home/hugomes/.python-build/python3.13/lib/python3.13/site-packages/sklearn/neural_network/_multilayer_perceptron.py:785: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (1000) reached and the optimization hasn't converged yet.
+  warnings.warn(
+/home/hugomes/.python-build/python3.13/lib/python3.13/site-packages/sklearn/neural_network/_multilayer_perceptron.py:785: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (1000) reached and the optimization hasn't converged yet.
+  warnings.warn(
+/home/hugomes/.python-build/python3.13/lib/python3.13/site-packages/sklearn/neural_network/_multilayer_perceptron.py:785: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (1000) reached and the optimization hasn't converged yet.
+  warnings.warn(
+/home/hugomes/.python-build/python3.13/lib/python3.13/site-packages/sklearn/neural_network/_multilayer_perceptron.py:785: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (1000) reached and the optimization hasn't converged yet.
+  warnings.warn(
+/home/hugomes/.python-build/python3.13/lib/python3.13/site-packages/sklearn/neural_network/_multilayer_perceptron.py:785: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (1000) reached and the optimization hasn't converged yet.
+  warnings.warn(
+/home/hugomes/.python-build/python3.13/lib/python3.13/site-packages/sklearn/neural_network/_multilayer_perceptron.py:785: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (1000) reached and the optimization hasn't converged yet.
+  warnings.warn(
+/home/hugomes/.python-build/python3.13/lib/python3.13/site-packages/sklearn/neural_network/_multilayer_perceptron.py:785: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (1000) reached and the optimization hasn't converged yet.
+  warnings.warn(
+/home/hugomes/.python-build/python3.13/lib/python3.13/site-packages/sklearn/neural_network/_multilayer_perceptron.py:785: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (1000) reached and the optimization hasn't converged yet.
+  warnings.warn(
+
+--- visualizacao (41.61s) | OK ---
+Três features mais importantes:
+            feature  importancia_media_s_km
+        declive_pct               10.870876
+ subida_acumulada_m                3.968405
+distancia_inicio_km                0.876195
+Curva de aprendizagem: 2 a 16 atividades de treino
+
+--- relatorio (0.63s) | OK ---
+Relatório criado com 14 secções:
+objetivo, dados, EDA inicial, qualidade, perfil/alvo, zonas, dataset, validação, modelos, resultados, diagnóstico, previsão, limitações e conclusões
+
+=== Resumo: 6 OK, 0 falhas, 167.43s ===
+
+=== Execução iniciada em 2026-09-08T16:46:06 ===
+
+--- analise_fits (22.81s) | OK ---
+Atividades processadas: 34
+Atividades excluídas: 0
+atividade_id  distancia_m  ritmo_medio_s_km  fc_media_bpm
+ 21568213058      4699.09        402.896596    156.049180
+ 21574110161      8128.23        398.175565    163.109399
+ 21604546980      2485.29        575.535952    128.892734
+ 21648150892     15080.72        444.736717    173.632703
+ 21682806144      4701.65        570.632946    134.190559
+ 21703191468      4050.80        661.997024    149.842105
+ 21729420815     15084.72        498.824491    169.004383
+ 21827489413      7105.06        588.818709    138.506732
+ 21848059283      8020.98        502.427866    148.842105
+ 21862167927     18125.46        401.177216    171.180153
+ 21909979898      5998.58        517.098731    136.702532
+ 21946978854     12829.43        511.549635    153.058261
+ 22118031985      8164.75        503.744159    146.119850
+ 22259327797     12985.23        440.123956    174.814751
+ 22582028728     10574.76        457.814763    170.818514
+ 22610623020      5352.71        572.793253    136.537864
+ 22664327478     15510.42        583.224901    179.108356
+ 22882313372      5668.41        500.140251    136.414376
+ 22910890927     13283.63        446.256799    166.171984
+ 22943992812      6706.22        402.812679    162.035846
+ 22980101796     18005.96        450.556030    155.768009
+ 23059351180      5012.56        313.213208    177.033736
+ 23064485029     14007.43        512.370318    141.002478
+ 23095730671      6556.17        351.424688    160.665418
+ 23119535339      9008.31        489.992018    134.760914
+ 23161986328     18860.00        532.997207    177.747448
+ 23192176528      5526.00        521.893080    130.602285
+ 23219229363      7267.45        395.427738    154.440291
+ 23299035298      9433.00        392.876073    158.459671
+ 23356119297      6438.33        374.165350    161.979244
+ 23379302381      5008.72        294.686067    178.715832
+ 23996168837      7007.13        476.362510    165.412027
+ 24069625931     11628.92        405.865038    168.005217
+ 24225591249      5199.35        386.009790    165.690323
+
+[stderr]
+2026-09-08 16:46:07,004 | INFO | Atividade 21568213058: 366 registos
+2026-09-08 16:46:07,347 | INFO | Atividade 21574110161: 649 registos
+2026-09-08 16:46:07,631 | INFO | Atividade 21604546980: 289 registos
+2026-09-08 16:46:08,103 | INFO | Atividade 21648150892: 1217 registos
+2026-09-08 16:46:08,631 | INFO | Atividade 21682806144: 572 registos
+2026-09-08 16:46:09,116 | INFO | Atividade 21703191468: 570 registos
+2026-09-08 16:46:09,391 | INFO | Atividade 21729420815: 1369 registos
+2026-09-08 16:46:09,896 | INFO | Atividade 21827489413: 817 registos
+2026-09-08 16:46:10,454 | INFO | Atividade 21848059283: 836 registos
+2026-09-08 16:46:10,868 | INFO | Atividade 21862167927: 1310 registos
+2026-09-08 16:46:11,195 | INFO | Atividade 21909979898: 632 registos
+2026-09-08 16:46:11,643 | INFO | Atividade 21946978854: 1150 registos
+2026-09-08 16:46:12,109 | INFO | Atividade 22118031985: 801 registos
+2026-09-08 16:46:12,581 | INFO | Atividade 22259327797: 1166 registos
+2026-09-08 16:46:13,026 | INFO | Atividade 22582028728: 821 registos
+2026-09-08 16:46:13,474 | INFO | Atividade 22610623020: 515 registos
+2026-09-08 16:46:14,033 | INFO | Atividade 22664327478: 1855 registos
+2026-09-08 16:46:14,485 | INFO | Atividade 22882313372: 2838 registos
+2026-09-08 16:46:15,005 | INFO | Atividade 22910890927: 6175 registos
+2026-09-08 16:46:15,566 | INFO | Atividade 22943992812: 2706 registos
+2026-09-08 16:46:16,716 | INFO | Atividade 22980101796: 8121 registos
+2026-09-08 16:46:17,360 | INFO | Atividade 23059351180: 1571 registos
+2026-09-08 16:46:18,516 | INFO | Atividade 23064485029: 7264 registos
+2026-09-08 16:46:18,954 | INFO | Atividade 23095730671: 2403 registos
+2026-09-08 16:46:19,523 | INFO | Atividade 23119535339: 4421 registos
+2026-09-08 16:46:20,342 | INFO | Atividade 23161986328: 11265 registos
+2026-09-08 16:46:20,926 | INFO | Atividade 23192176528: 2889 registos
+2026-09-08 16:46:21,711 | INFO | Atividade 23219229363: 2889 registos
+2026-09-08 16:46:22,253 | INFO | Atividade 23299035298: 3707 registos
+2026-09-08 16:46:22,702 | INFO | Atividade 23356119297: 2409 registos
+2026-09-08 16:46:23,321 | INFO | Atividade 23379302381: 1478 registos
+2026-09-08 16:46:24,256 | INFO | Atividade 23996168837: 3359 registos
+2026-09-08 16:46:24,473 | INFO | Atividade 24069625931: 4792 registos
+2026-09-08 16:46:24,866 | INFO | Atividade 24225591249: 2015 registos
+
+--- preparacao (13.30s) | OK ---
+Atividades com amostras: 34
+Amostras válidas: 5376
+Amostras por zona:
+zona_ordem
+1      80
+2    1190
+3    1392
+4    2084
+5     630
+Confirmação: nove features permitidas, sem FC exata, velocidade ou potência.
+
+--- eda_modelo (2.65s) | OK ---
+Amostras: 5376
+Atividades: 34
+Zonas cobertas: [1, 2, 3, 4, 5]
+Outliers IQR detetados: 657 (preservados)
+
+--- treino (439.67s) | OK ---
+Fold 1/34 — atividade 21568213058
+Fold 2/34 — atividade 21574110161
+Fold 3/34 — atividade 21604546980
+Fold 4/34 — atividade 21648150892
+Fold 5/34 — atividade 21682806144
+Fold 6/34 — atividade 21703191468
+Fold 7/34 — atividade 21729420815
+Fold 8/34 — atividade 21827489413
+Fold 9/34 — atividade 21848059283
+Fold 10/34 — atividade 21862167927
+Fold 11/34 — atividade 21909979898
+Fold 12/34 — atividade 21946978854
+Fold 13/34 — atividade 22118031985
+Fold 14/34 — atividade 22259327797
+Fold 15/34 — atividade 22582028728
+Fold 16/34 — atividade 22610623020
+Fold 17/34 — atividade 22664327478
+Fold 18/34 — atividade 22882313372
+Fold 19/34 — atividade 22910890927
+Fold 20/34 — atividade 22943992812
+Fold 21/34 — atividade 22980101796
+Fold 22/34 — atividade 23059351180
+Fold 23/34 — atividade 23064485029
+Fold 24/34 — atividade 23095730671
+Fold 25/34 — atividade 23119535339
+Fold 26/34 — atividade 23161986328
+Fold 27/34 — atividade 23192176528
+Fold 28/34 — atividade 23219229363
+Fold 29/34 — atividade 23299035298
+Fold 30/34 — atividade 23356119297
+Fold 31/34 — atividade 23379302381
+Fold 32/34 — atividade 23996168837
+Fold 33/34 — atividade 24069625931
+Fold 34/34 — atividade 24225591249
+
+Ranking dos modelos:
+              modelo  mae_macro_s_km  rmse_macro_s_km   r2_macro  melhoria_vs_dummy_pct
+    GradientBoosting       68.583811        87.651513  -1.151295              30.621688
+        RandomForest       69.247146        87.883934  -1.118679              29.950668
+HistGradientBoosting       69.786896        89.257299  -1.221771              29.404665
+    RedeNeuronal_MLP       75.435305        95.511763  -1.937543              23.690823
+               Ridge       85.599267       106.035247  -6.037499              13.409117
+             SVR_RBF       89.192242       113.300518  -7.373376               9.774521
+               Dummy       98.854827       120.035457 -14.564192               0.000000
+
+Modelo vencedor: GradientBoosting
+MAE macro OOF: 68.58 s/km (01:09)
+Melhoria face ao baseline: 30.6%
+
+[stderr]
+/home/hugomes/.python-build/python3.13/lib/python3.13/site-packages/sklearn/neural_network/_multilayer_perceptron.py:785: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (1000) reached and the optimization hasn't converged yet.
+  warnings.warn(
+/home/hugomes/.python-build/python3.13/lib/python3.13/site-packages/sklearn/neural_network/_multilayer_perceptron.py:785: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (1000) reached and the optimization hasn't converged yet.
+  warnings.warn(
+/home/hugomes/.python-build/python3.13/lib/python3.13/site-packages/sklearn/neural_network/_multilayer_perceptron.py:785: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (1000) reached and the optimization hasn't converged yet.
+  warnings.warn(
+/home/hugomes/.python-build/python3.13/lib/python3.13/site-packages/sklearn/neural_network/_multilayer_perceptron.py:785: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (1000) reached and the optimization hasn't converged yet.
+  warnings.warn(
+/home/hugomes/.python-build/python3.13/lib/python3.13/site-packages/sklearn/neural_network/_multilayer_perceptron.py:785: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (1000) reached and the optimization hasn't converged yet.
+  warnings.warn(
+/home/hugomes/.python-build/python3.13/lib/python3.13/site-packages/sklearn/neural_network/_multilayer_perceptron.py:785: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (1000) reached and the optimization hasn't converged yet.
+  warnings.warn(
+/home/hugomes/.python-build/python3.13/lib/python3.13/site-packages/sklearn/neural_network/_multilayer_perceptron.py:785: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (1000) reached and the optimization hasn't converged yet.
+  warnings.warn(
+
+--- visualizacao (163.57s) | OK ---
+Três features mais importantes:
+            feature  importancia_media_s_km
+ subida_acumulada_m               15.184638
+        declive_pct               10.992457
+distancia_inicio_km                4.069480
+Curva de aprendizagem: 2 a 33 atividades de treino
+
+--- previsão (2.01s) | OK ---
+{
+  "percurso": "Dados/brutos/24225591249_ACTIVITY.fit",
+  "modelo": "/home/hugomes/projects/AI Eng/1 - Projeto Prático /artefactos/modelos/final/modelo_ritmo_final.joblib",
+  "zonas": {
+    "Z1": {
+      "distancia_valida_m": 5199.35,
+      "tempo_estimado_sem_paragens_s": 2646.2299895089604,
+      "ritmo_medio_s_km": 508.95400184810796,
+      "ritmo_medio_mmss_km": "08:29/km",
+      "distancia_pouco_suporte_m": 1749.3500000000004,
+      "trocos_invalidos": 0
+    },
+    "Z2": {
+      "distancia_valida_m": 5199.35,
+      "tempo_estimado_sem_paragens_s": 2484.5197254197565,
+      "ritmo_medio_s_km": 477.851986386713,
+      "ritmo_medio_mmss_km": "07:58/km",
+      "distancia_pouco_suporte_m": 0.0,
+      "trocos_invalidos": 0
+    },
+    "Z3": {
+      "distancia_valida_m": 5199.35,
+      "tempo_estimado_sem_paragens_s": 2274.0513075643667,
+      "ritmo_medio_s_km": 437.372230675828,
+      "ritmo_medio_mmss_km": "07:17/km",
+      "distancia_pouco_suporte_m": 0.0,
+      "trocos_invalidos": 0
+    },
+    "Z4": {
+      "distancia_valida_m": 5199.35,
+      "tempo_estimado_sem_paragens_s": 1872.7962005203276,
+      "ritmo_medio_s_km": 360.1981402522099,
+      "ritmo_medio_mmss_km": "06:00/km",
+      "distancia_pouco_suporte_m": 0.0,
+      "trocos_invalidos": 0
+    },
+    "Z5": {
+      "distancia_valida_m": 5199.35,
+      "tempo_estimado_sem_paragens_s": 1768.9804184487725,
+      "ritmo_medio_s_km": 340.23107089324094,
+      "ritmo_medio_mmss_km": "05:40/km",
+      "distancia_pouco_suporte_m": 850.0,
+      "trocos_invalidos": 0
+    }
+  },
+  "aviso": "A previsão assume permanência na zona escolhida e não simula a resposta cardíaca real durante o esforço."
+}
+AVISO: A previsão assume permanência na zona escolhida e não simula a resposta cardíaca real durante o esforço.
+
+--- relatorio (0.62s) | OK ---
+Relatório criado com 14 secções:
+objetivo, dados, EDA inicial, qualidade, perfil/alvo, zonas, dataset, validação, modelos, resultados, diagnóstico, previsão, limitações e conclusões
+
+=== Resumo: 7 OK, 0 falhas, 644.63s ===

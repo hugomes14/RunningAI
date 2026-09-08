@@ -1,0 +1,103 @@
+{
+  "modelo_vencedor": "GradientBoosting",
+  "metricas_oof": {
+    "mae_macro_s_km": 68.5838107161086,
+    "rmse_macro_s_km": 87.651513255051,
+    "r2_macro": -1.1512948595709473,
+    "melhoria_vs_dummy_pct": 30.62168762863036
+  },
+  "ranking": [
+    {
+      "modelo": "GradientBoosting",
+      "mae_macro_s_km": 68.5838107161086,
+      "rmse_macro_s_km": 87.651513255051,
+      "r2_macro": -1.1512948595709473,
+      "erro_assinado_macro_s_km": -5.051686079622069,
+      "tempo_treino_medio_s": 0.8452787730570622,
+      "tempo_previsao_medio_s": 0.0021106403232004274,
+      "n_atividades": 34,
+      "melhoria_vs_dummy_pct": 30.62168762863036,
+      "mae_macro_mmss_km": "01:09",
+      "vencedor": true
+    },
+    {
+      "modelo": "RandomForest",
+      "mae_macro_s_km": 69.24714607077333,
+      "rmse_macro_s_km": 87.8839342956744,
+      "r2_macro": -1.118679247524128,
+      "erro_assinado_macro_s_km": 1.6420822507883386,
+      "tempo_treino_medio_s": 0.39557875202830045,
+      "tempo_previsao_medio_s": 0.04310268532229683,
+      "n_atividades": 34,
+      "melhoria_vs_dummy_pct": 29.950667938088532,
+      "mae_macro_mmss_km": "01:09",
+      "vencedor": false
+    },
+    {
+      "modelo": "HistGradientBoosting",
+      "mae_macro_s_km": 69.78689606329074,
+      "rmse_macro_s_km": 89.25729896163698,
+      "r2_macro": -1.2217710496323788,
+      "erro_assinado_macro_s_km": -2.814263920984398,
+      "tempo_treino_medio_s": 0.96406359353012,
+      "tempo_previsao_medio_s": 0.005889082030454815,
+      "n_atividades": 34,
+      "melhoria_vs_dummy_pct": 29.404665270807136,
+      "mae_macro_mmss_km": "01:10",
+      "vencedor": false
+    },
+    {
+      "modelo": "RedeNeuronal_MLP",
+      "mae_macro_s_km": 75.43530457808066,
+      "rmse_macro_s_km": 95.5117632369223,
+      "r2_macro": -1.937542757256549,
+      "erro_assinado_macro_s_km": 13.069087948152161,
+      "tempo_treino_medio_s": 9.95924256647199,
+      "tempo_previsao_medio_s": 0.002039709705808063,
+      "n_atividades": 34,
+      "melhoria_vs_dummy_pct": 23.690823385259105,
+      "mae_macro_mmss_km": "01:15",
+      "vencedor": false
+    },
+    {
+      "modelo": "Ridge",
+      "mae_macro_s_km": 85.59926718868998,
+      "rmse_macro_s_km": 106.03524711972011,
+      "r2_macro": -6.037499182706114,
+      "erro_assinado_macro_s_km": 3.0414289889869592,
+      "tempo_treino_medio_s": 0.003642574909677291,
+      "tempo_previsao_medio_s": 0.001260363999309073,
+      "n_atividades": 34,
+      "melhoria_vs_dummy_pct": 13.409117461266888,
+      "mae_macro_mmss_km": "01:26",
+      "vencedor": false
+    },
+    {
+      "modelo": "SVR_RBF",
+      "mae_macro_s_km": 89.19224167520953,
+      "rmse_macro_s_km": 113.30051790901278,
+      "r2_macro": -7.373375612180811,
+      "erro_assinado_macro_s_km": -24.32790727079998,
+      "tempo_treino_medio_s": 0.5343340447635616,
+      "tempo_previsao_medio_s": 0.015526290412012981,
+      "n_atividades": 34,
+      "melhoria_vs_dummy_pct": 9.774520554717824,
+      "mae_macro_mmss_km": "01:29",
+      "vencedor": false
+    },
+    {
+      "modelo": "Dummy",
+      "mae_macro_s_km": 98.85482706611799,
+      "rmse_macro_s_km": 120.03545730697512,
+      "r2_macro": -14.564192038404126,
+      "erro_assinado_macro_s_km": -5.851528412142001e-15,
+      "tempo_treino_medio_s": 0.0010131711777135292,
+      "tempo_previsao_medio_s": 0.00031509817755945465,
+      "n_atividades": 34,
+      "melhoria_vs_dummy_pct": 0.0,
+      "mae_macro_mmss_km": "01:39",
+      "vencedor": false
+    }
+  ],
+  "nota": "Seleção baseada apenas em previsões LeaveOneGroupOut fora do treino."
+}

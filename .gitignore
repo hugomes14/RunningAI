@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# Ambientes virtuais
+.venv/
+venv/
+
+# Artefactos gerados (modelos treinados ~1.2 GB)
+artefactos/modelos/
+
+# Sistema de ficheiros / editor
+.DS_Store
+Thumbs.db

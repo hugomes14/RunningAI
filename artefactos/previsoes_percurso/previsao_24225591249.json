@@ -1,0 +1,47 @@
+{
+  "percurso": "Dados/brutos/24225591249_ACTIVITY.fit",
+  "modelo": "/home/hugomes/projects/AI Eng/1 - Projeto Prático /artefactos/modelos/final/modelo_ritmo_final.joblib",
+  "zonas": {
+    "Z1": {
+      "distancia_valida_m": 5199.35,
+      "tempo_estimado_sem_paragens_s": 2646.2299895089604,
+      "ritmo_medio_s_km": 508.95400184810796,
+      "ritmo_medio_mmss_km": "08:29/km",
+      "distancia_pouco_suporte_m": 1749.3500000000004,
+      "trocos_invalidos": 0
+    },
+    "Z2": {
+      "distancia_valida_m": 5199.35,
+      "tempo_estimado_sem_paragens_s": 2484.5197254197565,
+      "ritmo_medio_s_km": 477.851986386713,
+      "ritmo_medio_mmss_km": "07:58/km",
+      "distancia_pouco_suporte_m": 0.0,
+      "trocos_invalidos": 0
+    },
+    "Z3": {
+      "distancia_valida_m": 5199.35,
+      "tempo_estimado_sem_paragens_s": 2274.0513075643667,
+      "ritmo_medio_s_km": 437.372230675828,
+      "ritmo_medio_mmss_km": "07:17/km",
+      "distancia_pouco_suporte_m": 0.0,
+      "trocos_invalidos": 0
+    },
+    "Z4": {
+      "distancia_valida_m": 5199.35,
+      "tempo_estimado_sem_paragens_s": 1872.7962005203276,
+      "ritmo_medio_s_km": 360.1981402522099,
+      "ritmo_medio_mmss_km": "06:00/km",
+      "distancia_pouco_suporte_m": 0.0,
+      "trocos_invalidos": 0
+    },
+    "Z5": {
+      "distancia_valida_m": 5199.35,
+      "tempo_estimado_sem_paragens_s": 1768.9804184487725,
+      "ritmo_medio_s_km": 340.23107089324094,
+      "ritmo_medio_mmss_km": "05:40/km",
+      "distancia_pouco_suporte_m": 850.0,
+      "trocos_invalidos": 0
+    }
+  },
+  "aviso": "A previsão assume permanência na zona escolhida e não simula a resposta cardíaca real durante o esforço."
+}
