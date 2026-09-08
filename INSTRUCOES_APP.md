@@ -18,7 +18,7 @@ APP_PORT=8000 .venv/bin/python app.py
 
 ## Serviços
 
-A página inicial apresenta os serviços da plataforma. O **RitmoAI** está disponível; PlanoAI, RecuperaAI e ProvaAI aparecem como serviços futuros.
+A página inicial apresenta os serviços da plataforma. O **RitmoAI** está disponível; **PosturaAI** e **TreinadorAI** aparecem como serviços futuros.
 
 ## RitmoAI
 
