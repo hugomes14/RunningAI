@@ -1,6 +1,6 @@
-# PaceLab — Previsão de ritmo por percurso e zona cardíaca
+# RunningAI — Serviços inteligentes para corrida
 
-Projeto de aprendizagem automática que estima o ritmo de corrida de um atleta a partir do perfil do percurso e da zona cardíaca pretendida. A solução processa atividades Garmin em formato FIT, cria troços de 50 metros, compara vários modelos de regressão e disponibiliza o modelo vencedor numa aplicação Flask.
+Plataforma Flask preparada para reunir vários serviços de inteligência artificial aplicados à corrida. O primeiro serviço, **RitmoAI**, estima o ritmo de um atleta a partir do perfil do percurso e da zona cardíaca pretendida.
 
 ## Funcionalidades
 
@@ -12,7 +12,8 @@ Projeto de aprendizagem automática que estima o ritmo de corrida de um atleta a
 - comparação de Ridge, Random Forest, Gradient Boosting, HistGradientBoosting, SVR e rede neuronal MLP;
 - validação `LeaveOneGroupOut`, mantendo cada atividade de teste fora do treino;
 - gráficos de métricas, resíduos, qualidade dos dados e importância das variáveis;
-- previsão por linha de comandos ou através de uma interface web responsiva.
+- previsão por linha de comandos ou através de uma interface web responsiva;
+- catálogo RunningAI preparado para receber novos serviços.
 
 ## Estrutura
 
@@ -86,13 +87,12 @@ Depois de treinar o modelo:
 python app.py
 ```
 
-Abra <http://127.0.0.1:5000>. Na aplicação pode:
+Abra <http://127.0.0.1:5000> para aceder ao catálogo RunningAI. Selecione **RitmoAI** ou abra diretamente <http://127.0.0.1:5000/ritmo-ai>. No serviço pode:
 
 - escolher um percurso existente em `Dados/brutos/`;
 - enviar um ficheiro FIT ou um CSV com as colunas `distancia_m` e `altitude_m`;
 - selecionar uma zona cardíaca;
-- consultar ritmo médio, tempo estimado, subida acumulada, perfil previsto e suporte dos dados;
-- abrir a área com os gráficos de treino.
+- consultar ritmo médio, tempo estimado, subida acumulada, perfil previsto e suporte dos dados.
 
 Para usar outra porta:
 

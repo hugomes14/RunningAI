@@ -1,9 +1,10 @@
 {% extends "base.html" %}
-{% block title %}Previsão · PaceLab{% endblock %}
+{% block title %}RitmoAI · RunningAI{% endblock %}
 {% block content %}
+<div class="service-breadcrumb"><a href="{{ url_for('inicio') }}">Serviços</a><span>›</span><strong>RitmoAI</strong></div>
 <section class="dashboard-intro">
   <div>
-    <p class="eyebrow">PLANEAMENTO DE CORRIDA</p>
+    <p class="eyebrow">RITMOAI · PREVISÃO DE CORRIDA</p>
     <h1>Ritmo previsto para o teu percurso.</h1>
   </div>
   <p>Seleciona o percurso e a intensidade. A previsão usa o perfil altimétrico e o modelo treinado nas tuas atividades.</p>
@@ -11,7 +12,7 @@
 
 <div class="dashboard">
   <aside class="card control-panel">
-    <form method="post" enctype="multipart/form-data" id="prediction-form" action="{{ url_for('inicio') }}">
+    <form method="post" enctype="multipart/form-data" id="prediction-form" action="{{ url_for('ritmo_ai') }}">
       <div class="control-heading">
         <span>Configuração</span>
         <small>FIT ou CSV · Z1–Z5</small>

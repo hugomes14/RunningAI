@@ -1,4 +1,4 @@
-# Aplicação PaceLab
+# Aplicação RunningAI
 
 ## Iniciar
 
@@ -16,16 +16,16 @@ Para usar outra porta:
 APP_PORT=8000 .venv/bin/python app.py
 ```
 
-## Previsão
+## Serviços
+
+A página inicial apresenta os serviços da plataforma. O **RitmoAI** está disponível; PlanoAI, RecuperaAI e ProvaAI aparecem como serviços futuros.
+
+## RitmoAI
 
 - Escolher uma atividade existente em `Dados/brutos/` ou enviar um ficheiro `.fit`/`.csv`.
 - Um CSV deve conter as colunas `distancia_m` e `altitude_m`.
 - Selecionar uma zona cardíaca entre Z1 e Z5.
 - Consultar o ritmo médio, tempo estimado, distância, subida acumulada, gráfico e previsão por troço.
 - Os uploads são processados num ficheiro temporário e eliminados após a previsão.
-
-## Gráficos de treino
-
-A tab **Gráficos de treino** apresenta as métricas fora do treino, resíduos, importâncias, curva de aprendizagem, qualidade dos dados e perfis individuais das atividades.
 
 O modelo e o dataset são recarregados automaticamente quando os respetivos ficheiros são atualizados durante uma nova sessão de treino.

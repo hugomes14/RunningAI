@@ -3,23 +3,29 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %}PaceLab{% endblock %}</title>
+  <meta name="theme-color" content="#111936">
+  <meta name="description" content="RunningAI — serviços inteligentes para corrida.">
+  <title>{% block title %}RunningAI{% endblock %}</title>
   <link rel="icon" href="{{ url_for('static', filename='favicon.svg') }}" type="image/svg+xml">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="{{ url_for('inicio') }}" aria-label="PaceLab — início">
-      <span class="brand-mark">P</span>
-      <span><strong>PaceLab</strong><small>Previsão por percurso</small></span>
+    <a class="brand" href="{{ url_for('inicio') }}" aria-label="RunningAI — início">
+      <span class="brand-mark"><img src="{{ url_for('static', filename='favicon.svg') }}" alt=""></span>
+      <span><strong>Running<span>AI</span></strong><small>Inteligência para corrida</small></span>
     </a>
     <nav class="tabs" aria-label="Navegação principal">
-      <a class="{{ 'active' if pagina == 'previsao' else '' }}" href="{{ url_for('inicio') }}">Previsão</a>
-      <a class="{{ 'active' if pagina == 'graficos' else '' }}" href="{{ url_for('graficos') }}">Gráficos de treino</a>
+      <a class="{{ 'active' if pagina == 'inicio' else '' }}" href="{{ url_for('inicio') }}">Serviços</a>
+      <a class="{{ 'active' if pagina == 'ritmo_ai' else '' }}" href="{{ url_for('ritmo_ai') }}">RitmoAI</a>
     </nav>
-    <div class="model-pill" title="Modelo carregado">
+    {% if pagina == 'ritmo_ai' and modelo %}
+    <div class="model-pill" title="Modelo do RitmoAI carregado">
       <span class="status-dot"></span>{{ modelo.nome }} · {{ modelo.atividades }} atividades
     </div>
+    {% else %}
+    <div class="platform-pill"><span></span>1 serviço disponível</div>
+    {% endif %}
   </header>
 
   <main class="page-shell">
@@ -27,7 +33,8 @@
   </main>
 
   <footer>
-    PaceLab · Modelo com {{ "{:,}".format(modelo.amostras).replace(',', ' ') }} amostras · MAE {{ "%.1f"|format(modelo.mae) }} s/km
+    <span>RunningAI</span> · Serviços inteligentes para cada fase da corrida
+    {% if pagina == 'ritmo_ai' and modelo %} · RitmoAI com {{ "{:,}".format(modelo.amostras).replace(',', ' ') }} amostras{% endif %}
   </footer>
   <script src="{{ url_for('static', filename='app.js') }}"></script>
 </body>

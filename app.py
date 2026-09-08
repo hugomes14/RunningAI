@@ -1,4 +1,4 @@
-"""Aplicação Flask para previsão de ritmo e consulta dos gráficos de treino."""
+"""Plataforma RunningAI e serviço RitmoAI de previsão de ritmo."""
 
 from __future__ import annotations
 
@@ -18,7 +18,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import pandas as pd
-from flask import Flask, abort, jsonify, render_template, request, send_from_directory
+from flask import Flask, jsonify, render_template, request
 from werkzeug.utils import secure_filename
 
 from preparar_dados import perfil_percurso
@@ -34,27 +34,10 @@ from prever_percurso import (
 
 RAIZ = Path(__file__).resolve().parent
 DADOS_BRUTOS = RAIZ / "Dados" / "brutos"
-GRAFICOS = RAIZ / "artefactos" / "graficos"
 RESUMO_ATIVIDADES = RAIZ / "artefactos" / "analise_inicial" / "resumo_atividades.csv"
 EXTENSOES_PERMITIDAS = {".fit", ".csv"}
 LIMITE_UPLOAD_MB = 32
 LOCK_GRAFICO = Lock()
-
-GRAFICOS_PRINCIPAIS = [
-    ("comparacao_modelos.png", "Comparação dos modelos", "MAE e RMSE em validação por atividade."),
-    ("metricas_por_atividade.png", "Erro por atividade", "Variação do MAE nas atividades deixadas fora do treino."),
-    ("previsto_vs_real.png", "Previsto vs. real", "Dispersão das previsões fora do treino do modelo vencedor."),
-    ("residuos_modelo.png", "Resíduos", "Distribuição e padrão dos erros fora do treino."),
-    ("erro_por_zona_declive.png", "Erro por zona e declive", "Desempenho nas diferentes intensidades e inclinações."),
-    ("importancia_permutacao.png", "Importância das variáveis", "Perda de desempenho ao permutar cada variável no teste."),
-    ("curva_aprendizagem_atividades.png", "Curva de aprendizagem", "Evolução do erro com mais atividades completas."),
-    ("tempos_modelos.png", "Tempos dos modelos", "Custo médio de treino e previsão."),
-    ("correlacoes_dataset.png", "Correlações", "Relações lineares no dataset de modelação."),
-    ("distribuicoes_dataset.png", "Distribuições", "Distribuição das variáveis e do ritmo-alvo."),
-    ("ritmo_por_zona.png", "Ritmo por zona", "Distribuição do ritmo observado em cada zona cardíaca."),
-    ("ritmo_declive_zona.png", "Ritmo, zona e declive", "Interação entre intensidade, inclinação e ritmo."),
-    ("qualidade_dados.png", "Qualidade dos dados", "Intervalos aceites e rejeitados por atividade."),
-]
 
 app = Flask(__name__)
 app.config["MAX_CONTENT_LENGTH"] = LIMITE_UPLOAD_MB * 1024 * 1024
@@ -238,8 +221,15 @@ def processar_pedido_previsao() -> dict[str, Any]:
             temporario.unlink(missing_ok=True)
 
 
-@app.route("/", methods=["GET", "POST"])
+@app.get("/")
 def inicio():
+    """Apresenta o catálogo de serviços RunningAI."""
+    return render_template("home.html", pagina="inicio")
+
+
+@app.route("/ritmo-ai", methods=["GET", "POST"])
+def ritmo_ai():
+    """Apresenta e processa o serviço de previsão RitmoAI."""
     percursos = listar_percursos()
     previsao = None
     erro = None
@@ -254,8 +244,8 @@ def inicio():
             app.logger.exception("Falha durante a previsão")
             erro = f"Não foi possível processar o percurso ({type(exc).__name__})."
     return render_template(
-        "inicio.html",
-        pagina="previsao",
+        "ritmo_ai.html",
+        pagina="ritmo_ai",
         percursos=percursos,
         previsao=previsao,
         erro=erro,
@@ -279,35 +269,6 @@ def api_prever():
         return jsonify(ok=False, erro=f"Não foi possível processar o percurso ({type(exc).__name__})."), 500
 
 
-@app.get("/graficos")
-def graficos():
-    principais = []
-    for nome, titulo, descricao in GRAFICOS_PRINCIPAIS:
-        caminho = GRAFICOS / nome
-        if caminho.exists():
-            principais.append(
-                {"nome": nome, "titulo": titulo, "descricao": descricao, "versao": caminho.stat().st_mtime_ns}
-            )
-    atividades = []
-    for caminho in sorted(GRAFICOS.glob("atividade_*.png"), reverse=True):
-        atividades.append(
-            {"nome": caminho.name, "titulo": caminho.stem.replace("atividade_", "Atividade "), "versao": caminho.stat().st_mtime_ns}
-        )
-    return render_template(
-        "graficos.html", pagina="graficos", graficos=principais,
-        atividades=atividades, modelo=contexto_modelo(),
-    )
-
-
-@app.get("/ficheiros/graficos/<path:nome>")
-def ficheiro_grafico(nome: str):
-    permitidos = {item[0] for item in GRAFICOS_PRINCIPAIS}
-    permitidos.update(caminho.name for caminho in GRAFICOS.glob("atividade_*.png"))
-    if nome not in permitidos:
-        abort(404)
-    return send_from_directory(GRAFICOS, nome, max_age=0)
-
-
 @app.errorhandler(413)
 def upload_demasiado_grande(_erro):
     if request.path == "/api/prever":
@@ -315,7 +276,7 @@ def upload_demasiado_grande(_erro):
             ok=False, erro=f"O ficheiro excede o limite de {LIMITE_UPLOAD_MB} MB."
         ), 413
     return render_template(
-        "erro.html", pagina="previsao", codigo=413,
+        "erro.html", pagina="ritmo_ai", codigo=413,
         mensagem=f"O ficheiro excede o limite de {LIMITE_UPLOAD_MB} MB.",
         modelo=contexto_modelo(),
     ), 413

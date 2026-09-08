@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}RunningAI · Inteligência para corrida{% endblock %}
+{% block content %}
+<section class="home-hero">
+  <div class="hero-copy">
+    <p class="eyebrow">RUNNING, POTENCIADO POR IA</p>
+    <h1>Decisões mais inteligentes para cada corrida.</h1>
+    <p class="hero-lead">Uma plataforma de serviços pessoais que transforma os teus dados de treino em previsões e recomendações úteis.</p>
+    <a class="primary-button hero-button" href="#servicos"><span>Explorar serviços</span><b aria-hidden="true">↓</b></a>
+  </div>
+  <div class="hero-visual" aria-hidden="true">
+    <div class="orb orb-one"></div><div class="orb orb-two"></div>
+    <div class="ai-track">
+      <svg viewBox="0 0 520 310" role="img">
+        <path class="track-shadow" d="M52 245C118 253 126 142 204 164s93 100 164 52 43-125 101-147"/>
+        <path class="track-line" d="M52 245C118 253 126 142 204 164s93 100 164 52 43-125 101-147"/>
+        <circle cx="52" cy="245" r="10"/><circle cx="204" cy="164" r="8"/><circle cx="368" cy="216" r="8"/><circle cx="469" cy="69" r="11"/>
+      </svg>
+      <div class="runner-chip"><span>↗</span><strong>RitmoAI</strong><small>previsão ativa</small></div>
+      <div class="metric-float"><small>Ritmo previsto</small><strong>05:42</strong><span>/km</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="services-section" id="servicos">
+  <div class="section-heading">
+    <div><p class="eyebrow">SERVIÇOS RUNNINGAI</p><h2>Escolhe onde queres melhorar.</h2></div>
+    <p>Começamos pela previsão de ritmo. Novos serviços irão acompanhar o planeamento, recuperação e preparação de provas.</p>
+  </div>
+
+  <div class="services-grid">
+    <a class="service-card service-live" href="{{ url_for('ritmo_ai') }}">
+      <div class="service-top"><span class="service-icon icon-pace" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 22c5 0 5-12 11-12s5 12 11 12"/><circle cx="5" cy="22" r="2"/><circle cx="16" cy="10" r="2"/><circle cx="27" cy="22" r="2"/></svg></span><span class="service-status live"><i></i>Disponível</span></div>
+      <div><p class="service-number">01</p><h3>RitmoAI</h3><p>Prevê o teu ritmo e tempo de corrida a partir do percurso, altimetria e zona cardíaca.</p></div>
+      <div class="service-footer"><span>Percurso · Altimetria · FC</span><b>Experimentar <i>→</i></b></div>
+    </a>
+
+    <article class="service-card">
+      <div class="service-top"><span class="service-icon icon-plan" aria-hidden="true"><svg viewBox="0 0 32 32"><rect x="6" y="7" width="20" height="19" rx="4"/><path d="M10 4v6m12-6v6M6 13h20m-15 5h3m4 0h3m-10 4h3"/></svg></span><span class="service-status">Em breve</span></div>
+      <div><p class="service-number">02</p><h3>PlanoAI</h3><p>Cria planos de treino adaptativos com base no teu objetivo, disponibilidade e evolução.</p></div>
+      <div class="service-footer"><span>Planeamento · Progressão</span></div>
+    </article>
+
+    <article class="service-card">
+      <div class="service-top"><span class="service-icon icon-recovery" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 17h5l3-7 5 14 3-7h6"/><path d="M26 9a11 11 0 1 0 1 13"/></svg></span><span class="service-status">Em breve</span></div>
+      <div><p class="service-number">03</p><h3>RecuperaAI</h3><p>Interpreta carga e recuperação para ajudar a decidir quando treinar, reduzir ou descansar.</p></div>
+      <div class="service-footer"><span>Carga · Recuperação</span></div>
+    </article>
+
+    <article class="service-card">
+      <div class="service-top"><span class="service-icon icon-race" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M8 27V5m1 2h15l-4 5 4 5H9"/><path d="M5 27h9"/></svg></span><span class="service-status">Em breve</span></div>
+      <div><p class="service-number">04</p><h3>ProvaAI</h3><p>Prepara uma estratégia de prova por segmento, objetivo e perfil do percurso.</p></div>
+      <div class="service-footer"><span>Estratégia · Objetivos</span></div>
+    </article>
+  </div>
+</section>
+{% endblock %}

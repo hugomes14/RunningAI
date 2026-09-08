@@ -1,8 +1,8 @@
 {% extends "base.html" %}
-{% block title %}Erro {{ codigo }} · PaceLab{% endblock %}
+{% block title %}Erro {{ codigo }} · RunningAI{% endblock %}
 {% block content %}
 <section class="empty-state card">
   <span>{{ codigo }}</span><h1>Não foi possível continuar</h1><p>{{ mensagem }}</p>
-  <a class="primary-button inline" href="{{ url_for('inicio') }}">Voltar à previsão</a>
+  <a class="primary-button inline" href="{{ url_for('ritmo_ai') }}">Voltar ao RitmoAI</a>
 </section>
 {% endblock %}
